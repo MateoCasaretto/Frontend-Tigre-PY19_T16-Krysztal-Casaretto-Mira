@@ -1,184 +1,507 @@
-.counter {
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
-  margin-bottom: 24px;
-
-  &:hover {
-    border-color: var(--accent-border);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
+@font-face {
+  font-family: 'Tigre Sans';
+  src: url('./assets/fonts/TigreSans-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
-.hero {
-  position: relative;
-
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
-  }
-
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
-  }
-
-  .framework,
-  .vite {
-    position: absolute;
-  }
-
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
-
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
-  }
+@font-face {
+  font-family: 'Tigre Sans';
+  src: url('./assets/fonts/TigreSans-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
 }
 
-#center {
+@font-face {
+  font-family: 'Tigre Sans';
+  src: url('./assets/fonts/TigreSans-Semibold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Tigre Sans';
+  src: url('./assets/fonts/TigreSans-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --tigre-blue: #0047bb;
+  --tigre-blue-dark: #00358f;
+  --tigre-navy: #0b1f44;
+  --tigre-text: #1d2433;
+  --tigre-muted: #5b6577;
+  --tigre-border: #cdd4e0;
+  --tigre-bg: #eef1f6;
+  --tigre-surface: #ffffff;
+  --tigre-focus: rgba(0, 71, 187, 0.25);
+
+  font-family: 'Tigre Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color: var(--tigre-text);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--tigre-bg);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ---------- Login ---------- */
+
+.auth-page {
+  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  gap: 25px;
-  place-content: center;
-  place-items: center;
-  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 32px 16px;
+  padding-left: max(16px, env(safe-area-inset-left));
+  padding-right: max(16px, env(safe-area-inset-right));
+  padding-bottom: max(32px, env(safe-area-inset-bottom));
+}
 
-  @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--tigre-surface);
+  border-top: 4px solid var(--tigre-blue);
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(11, 31, 68, 0.08), 0 8px 24px rgba(11, 31, 68, 0.08);
+  padding: 32px 40px 40px;
+}
+
+/* El PNG trae mucho margen blanco: se recorta con zoom centrado */
+.auth-logo {
+  width: 220px;
+  aspect-ratio: 3.4;
+  overflow: hidden;
+  margin: 0 auto 16px;
+}
+
+.auth-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.4);
+}
+
+.auth-title {
+  margin: 0 0 4px;
+  text-align: center;
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: var(--tigre-navy);
+}
+
+.auth-subtitle {
+  margin: 0 0 28px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--tigre-muted);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-field label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--tigre-navy);
+}
+
+.form-field input {
+  width: 100%;
+  min-height: 48px;
+  font: inherit;
+  font-size: 1rem; /* 16px: evita el zoom automático de iOS al enfocar */
+  padding: 11px 12px;
+  -webkit-appearance: none;
+  appearance: none;
+  color: var(--tigre-text);
+  background: var(--tigre-surface);
+  border: 1px solid var(--tigre-border);
+  border-radius: 3px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.form-field input:focus {
+  outline: none;
+  border-color: var(--tigre-blue);
+  box-shadow: 0 0 0 3px var(--tigre-focus);
+}
+
+.form-field input[readonly] {
+  background: var(--tigre-bg);
+  color: var(--tigre-muted);
+}
+
+.form-submit {
+  font: inherit;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: 4px;
+  min-height: 48px;
+  padding: 12px 16px;
+  -webkit-appearance: none;
+  appearance: none;
+  color: #fff;
+  background: var(--tigre-blue);
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.form-submit:hover:not(:disabled) {
+  background: var(--tigre-blue-dark);
+}
+
+.form-submit:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--tigre-focus);
+}
+
+.form-submit:disabled {
+  background: #9db4dd;
+  cursor: not-allowed;
+}
+
+.auth-footer {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--tigre-muted);
+}
+
+@media (max-width: 480px) {
+  .auth-page {
+    justify-content: flex-start; /* arriba, para que el teclado no tape el formulario */
+    padding-top: max(24px, env(safe-area-inset-top));
+    gap: 16px;
+  }
+
+  .auth-card {
+    padding: 24px 20px 32px;
+  }
+
+  .auth-logo {
+    width: 180px;
+    margin-bottom: 12px;
+  }
+
+  .auth-title {
+    font-size: 1.25rem;
+  }
+
+  .auth-subtitle {
+    margin-bottom: 24px;
+  }
+
+  .auth-form {
     gap: 18px;
   }
 }
 
-#next-steps {
+@media (max-width: 360px) {
+  .auth-page {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .auth-card {
+    padding: 20px 16px 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .form-field input,
+  .form-submit {
+    transition: none;
+  }
+}
+
+/* ---------- Home ---------- */
+
+.home {
+  min-height: 100vh;
+  min-height: 100dvh;
+  max-width: 480px;
+  margin: 0 auto;
+  background: var(--tigre-bg);
+}
+
+.home-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   display: flex;
-  border-top: 1px solid var(--border);
-  text-align: left;
-
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
-    @media (max-width: 1024px) {
-      padding: 24px 20px;
-    }
-  }
-
-  .icon {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-  }
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    text-align: center;
-  }
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  padding-top: max(14px, env(safe-area-inset-top));
+  background: var(--tigre-surface);
+  border-bottom: 1px solid var(--tigre-border);
 }
 
-#docs {
-  border-right: 1px solid var(--border);
-
-  @media (max-width: 1024px) {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
+.home-header-title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--tigre-navy);
 }
 
-#next-steps ul {
-  list-style: none;
+.home-profile {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
   padding: 0;
+  color: var(--tigre-navy);
+  background: var(--tigre-bg);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.home-profile:focus-visible,
+.home-card:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--tigre-focus);
+}
+
+.home-content {
+  padding: 20px 16px 32px;
+  padding-bottom: max(32px, env(safe-area-inset-bottom));
+}
+
+.home-greeting {
+  margin: 0 0 16px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--tigre-navy);
+}
+
+.home-card {
   display: flex;
-  gap: 8px;
-  margin: 32px 0 0;
-
-  .logo {
-    height: 18px;
-  }
-
-  a {
-    color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
-    display: flex;
-    padding: 6px 12px;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    transition: box-shadow 0.3s;
-
-    &:hover {
-      box-shadow: var(--shadow);
-    }
-    .button-icon {
-      height: 18px;
-      width: 18px;
-    }
-  }
-
-  @media (max-width: 1024px) {
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    li {
-      flex: 1 1 calc(50% - 8px);
-    }
-
-    a {
-      width: 100%;
-      justify-content: center;
-      box-sizing: border-box;
-    }
-  }
-}
-
-#spacer {
-  height: 88px;
-  border-top: 1px solid var(--border);
-  @media (max-width: 1024px) {
-    height: 48px;
-  }
-}
-
-.ticks {
-  position: relative;
+  align-items: center;
+  gap: 16px;
   width: 100%;
+  min-height: 88px;
+  padding: 20px;
+  font: inherit;
+  text-align: left;
+  border: 1px solid var(--tigre-border);
+  border-radius: 12px;
+  cursor: pointer;
+}
 
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: -4.5px;
-    border: 5px solid transparent;
-  }
+.home-card--primary {
+  color: #fff;
+  background: linear-gradient(110deg, var(--tigre-navy) 0%, var(--tigre-blue) 100%);
+  border-color: transparent;
+  box-shadow: 0 4px 14px rgba(0, 71, 187, 0.25);
+}
 
-  &::before {
-    left: 0;
-    border-left-color: var(--border);
-  }
-  &::after {
-    right: 0;
-    border-right-color: var(--border);
-  }
+.home-card-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.home-card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.home-card-title {
+  font-size: 1.0625rem;
+  font-weight: 700;
+}
+
+.home-card-sub {
+  font-size: 0.8125rem;
+  opacity: 0.8;
+}
+
+.home-alert {
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #b42318;
+  background: #fdecea;
+  border: 1px solid #f5c2bd;
+  border-left: 4px solid #d92d20;
+  border-radius: 8px;
+}
+
+/* ---------- Home: refinamientos ---------- */
+
+.home-logo {
+  width: 96px;
+  aspect-ratio: 3.4;
+  overflow: hidden;
+}
+
+.home-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.4);
+}
+
+.home-welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.home-welcome .home-greeting {
+  margin: 0;
+}
+
+.home-role {
+  padding: 3px 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--tigre-blue);
+  background: #e3ecfa;
+  border-radius: 999px;
+}
+
+.home-card {
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.home-card--primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(0, 71, 187, 0.3);
+}
+
+.home-card--primary:active {
+  transform: translateY(0);
+}
+
+.home-card-text {
+  flex: 1;
+}
+
+.home-card-arrow {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+.home-card--ok {
+  color: #05603a;
+  background: #ecfdf3;
+  border-color: #abefc6;
+  cursor: default;
+}
+
+/* ---------- Seguridad (doble factor) ---------- */
+
+.home-header:has(.page-back) {
+  padding-left: 8px;
+}
+
+.page-back,
+.page-back-spacer {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+}
+
+.page-back {
+  padding: 0;
+  color: var(--tigre-navy);
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.page-back:hover {
+  background: var(--tigre-bg);
+}
+
+.page-back:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--tigre-focus);
+}
+
+.twofa-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 20px;
+  background: var(--tigre-surface);
+  border: 1px solid var(--tigre-border);
+  border-radius: 12px;
+}
+
+.twofa-text {
+  margin: 0 0 20px;
+  text-align: center;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--tigre-muted);
+}
+
+.twofa-button {
+  width: 100%;
+}
+
+.twofa-qr {
+  margin-bottom: 20px;
+  padding: 8px;
+  background: #fff;
+  border: 1px solid var(--tigre-border);
+  border-radius: 8px;
+}
+
+.twofa-qr img {
+  display: block;
+  width: 200px;
+  height: 200px;
+}
+
+.twofa-card .auth-form {
+  width: 100%;
 }

@@ -3,6 +3,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setTwoFactorEnabled } from "../features/usuario.slice";
+import { toast } from "react-toastify";
 
 const IconoVolver = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -32,8 +33,10 @@ const DobleFactorPage = () => {
       .then((response) => {
         setQrCode(response.data.qrCode);
         setPaso("Generado");
+        toast.success("Código QR generado. Escanealo con tu app de autenticación.");
       })
       .catch((error) => {
+        toast.error("Error al generar el código QR.");
         console.error(error);
       });
   };
@@ -53,8 +56,11 @@ const DobleFactorPage = () => {
       .then(() => {
         dispatch(setTwoFactorEnabled(true));
         navigate("/home", { replace: true });
+        toast.success("Verificación exitosa. La autenticación de dos factores ha sido habilitada.");
+
       })
       .catch((error) => {
+        toast.error("Error al verificar el código.");
         console.error("Error al verificar el código:", error);
       });
   };

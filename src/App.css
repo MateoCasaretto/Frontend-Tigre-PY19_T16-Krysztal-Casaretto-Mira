@@ -505,3 +505,58 @@ body {
 .twofa-card .auth-form {
   width: 100%;
 }
+
+/* ---------- Toasts ---------- */
+
+.Toastify {
+  --toastify-font-family: 'Tigre Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --toastify-color-light: var(--tigre-surface);
+  --toastify-text-color-light: var(--tigre-text);
+  --toastify-color-success: #067647;
+  --toastify-color-error: #d92d20;
+  --toastify-color-info: var(--tigre-blue);
+  --toastify-icon-color-success: #067647;
+  --toastify-icon-color-error: #d92d20;
+  --toastify-icon-color-info: var(--tigre-blue);
+  --toastify-toast-width: 360px;
+}
+
+.Toastify__toast {
+  align-items: center;
+  min-height: 56px;
+  padding: 12px 14px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.4;
+  border-left: 4px solid var(--tigre-blue);
+  border-radius: 6px;
+  box-shadow: 0 1px 2px rgba(11, 31, 68, 0.08), 0 8px 24px rgba(11, 31, 68, 0.14);
+}
+
+.Toastify__toast--success {
+  border-left-color: #067647;
+}
+
+.Toastify__toast--error {
+  border-left-color: #d92d20;
+}
+
+.Toastify__toast--info {
+  border-left-color: var(--tigre-blue);
+}
+
+.Toastify__close-button {
+  color: var(--tigre-muted);
+  opacity: 0.7;
+}
+
+.Toastify__progress-bar {
+  height: 3px;
+}
+
+@media (max-width: 480px) {
+  .Toastify__toast-container {
+    top: max(8px, env(safe-area-inset-top));
+    padding: 0 8px;
+  }
+}

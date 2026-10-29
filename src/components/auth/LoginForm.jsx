@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setUsuario } from '../../features/usuario.slice';
+import { toast } from 'react-toastify';
 
 const LoginForm = () => {
   const idEmail = useId();
@@ -40,10 +41,12 @@ const LoginForm = () => {
         }));
 
         console.log(response.data.twoFactorEnabled, response.data.userId);
+        toast.success('Inicio de sesión exitoso');
 
         navigate('/home', { replace: true });
       }).catch((error) => {
         console.error('Error al iniciar sesión:', error);
+        toast.error('Error al iniciar sesión. Por favor, verifica tus credenciales.');
       });
   }
 

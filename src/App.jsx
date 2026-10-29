@@ -1,5 +1,6 @@
 import './App.css'
 import { Routes, Route } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
 
 import LoginPage from './pages/LoginPage'
 import HomePage from './pages/HomePage'
@@ -8,6 +9,7 @@ import ProtectedRoute from './guards/ProtectedRoute'
 
 function App() {
   return (
+  <>
     <Routes>
       <Route path="/" element={<LoginPage />} />
       <Route element={<ProtectedRoute />}>
@@ -15,6 +17,8 @@ function App() {
          <Route path="/doble-factor" element={<DobleFactorPage />} />
       </Route>
     </Routes>
+    <ToastContainer position="top-right" autoClose={4000} theme="light" />
+  </>
   )
 }
 

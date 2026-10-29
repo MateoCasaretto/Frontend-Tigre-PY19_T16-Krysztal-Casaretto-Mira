@@ -15,6 +15,14 @@ const IconoFlecha = () => (
   </svg>
 )
 
+const IconoUsuario = () => (
+  <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <circle cx="10" cy="8" r="4" />
+    <path d="M3 20c0-3.3 3.1-6 7-6s7 2.7 7 6" />
+    <path d="M19 8v6M16 11h6" />
+  </svg>
+)
+
 const HomePage = () => {
   const nombreUsuario = useSelector((state) => state.usuario.nombreUsuario)
   const rol = useSelector((state) => state.usuario.rol)
@@ -60,6 +68,15 @@ const HomePage = () => {
             </span>
           </div>
         )}
+        
+        <button type="button" className="home-card" onClick={() => navigate('/register')}>
+          <span className="home-card-icon"><IconoUsuario /></span>
+          <span className="home-card-text">
+            <span className="home-card-title">Registrar usuario</span>
+            <span className="home-card-sub">Dar de alta un nuevo usuario</span>
+          </span>
+          <span className="home-card-arrow"><IconoFlecha /></span>
+        </button>
       </main>
     </div>
   )

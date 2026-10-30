@@ -31,6 +31,12 @@ const IconoCatalogo = () => (
   </svg>
 )
 
+const IconoCodigoBarras = () => (
+  <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+    <path d="M4 5v14M7 5v14M11 5v14M14 5v14M18 5v14M20 5v14" />
+  </svg>
+)
+
 const HomePage = () => {
   const nombreUsuario = useSelector((state) => state.usuario.nombreUsuario)
   const rol = useSelector((state) => state.usuario.rol)
@@ -87,14 +93,25 @@ const HomePage = () => {
         </button>
 
         {rol === 'Administrador' && (
-          <button type="button" className="home-card" onClick={() => navigate('/importar-catalogo')}>
-            <span className="home-card-icon"><IconoCatalogo /></span>
-            <span className="home-card-text">
-              <span className="home-card-title">Importar catálogo</span>
-              <span className="home-card-sub">Cargar o actualizar los productos desde SAP</span>
-            </span>
-            <span className="home-card-arrow"><IconoFlecha /></span>
-          </button>
+          <>
+            <button type="button" className="home-card" onClick={() => navigate('/importar-catalogo')}>
+              <span className="home-card-icon"><IconoCatalogo /></span>
+              <span className="home-card-text">
+                <span className="home-card-title">Importar catálogo</span>
+                <span className="home-card-sub">Cargar o actualizar los productos desde SAP</span>
+              </span>
+              <span className="home-card-arrow"><IconoFlecha /></span>
+            </button>
+
+            <button type="button" className="home-card" onClick={() => navigate('/codigos-de-barras')}>
+              <span className="home-card-icon"><IconoCodigoBarras /></span>
+              <span className="home-card-text">
+                <span className="home-card-title">Códigos de barras</span>
+                <span className="home-card-sub">Asociar el código del envase al código SAP</span>
+              </span>
+              <span className="home-card-arrow"><IconoFlecha /></span>
+            </button>
+          </>
         )}
       </main>
     </div>

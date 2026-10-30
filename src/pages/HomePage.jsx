@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import logo from '../assets/LOGO_TIGRE.png'
+import logo from '../assets/logo-tigre.svg'
 
 const IconoEscudo = () => (
   <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -20,6 +20,14 @@ const IconoUsuario = () => (
     <circle cx="10" cy="8" r="4" />
     <path d="M3 20c0-3.3 3.1-6 7-6s7 2.7 7 6" />
     <path d="M19 8v6M16 11h6" />
+  </svg>
+)
+
+const IconoCatalogo = () => (
+  <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <rect x="3" y="4" width="18" height="16" rx="2" />
+    <path d="M3 9h18M9 9v11" />
+    <path d="M15 17v-5M13 14l2-2 2 2" />
   </svg>
 )
 
@@ -77,6 +85,17 @@ const HomePage = () => {
           </span>
           <span className="home-card-arrow"><IconoFlecha /></span>
         </button>
+
+        {rol === 'Administrador' && (
+          <button type="button" className="home-card" onClick={() => navigate('/importar-catalogo')}>
+            <span className="home-card-icon"><IconoCatalogo /></span>
+            <span className="home-card-text">
+              <span className="home-card-title">Importar catálogo</span>
+              <span className="home-card-sub">Cargar o actualizar los productos desde SAP</span>
+            </span>
+            <span className="home-card-arrow"><IconoFlecha /></span>
+          </button>
+        )}
       </main>
     </div>
   )

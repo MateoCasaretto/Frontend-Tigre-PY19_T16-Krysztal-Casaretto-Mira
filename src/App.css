@@ -31,7 +31,7 @@
 }
 
 :root {
-  --tigre-blue: #0047bb;
+  --tigre-blue: #0046bf;
   --tigre-blue-dark: #00358f;
   --tigre-navy: #0b1f44;
   --tigre-text: #1d2433;
@@ -39,7 +39,10 @@
   --tigre-border: #cdd4e0;
   --tigre-bg: #eef1f6;
   --tigre-surface: #ffffff;
-  --tigre-focus: rgba(0, 71, 187, 0.25);
+  --tigre-focus: rgba(0, 70, 191, 0.25);
+  --tigre-blue-soft: #e3ecfa;
+  --tigre-success: #067647;
+  --tigre-error: #b42318;
 
   font-family: 'Tigre Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
   color: var(--tigre-text);
@@ -89,20 +92,16 @@ body {
   padding: 32px 40px 40px;
 }
 
-/* El PNG trae mucho margen blanco: se recorta con zoom centrado */
+/* Logo en SVG con el viewBox recortado al dibujo: no necesita recorte ni zoom */
 .auth-logo {
-  width: 220px;
-  aspect-ratio: 3.4;
-  overflow: hidden;
-  margin: 0 auto 16px;
+  width: 200px;
+  margin: 0 auto 20px;
 }
 
 .auth-logo img {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: scale(1.4);
+  height: auto;
 }
 
 .auth-title {
@@ -224,8 +223,8 @@ body {
   }
 
   .auth-logo {
-    width: 180px;
-    margin-bottom: 12px;
+    width: 168px;
+    margin-bottom: 16px;
   }
 
   .auth-title {
@@ -342,7 +341,7 @@ body {
   color: #fff;
   background: linear-gradient(110deg, var(--tigre-navy) 0%, var(--tigre-blue) 100%);
   border-color: transparent;
-  box-shadow: 0 4px 14px rgba(0, 71, 187, 0.25);
+  box-shadow: 0 4px 14px rgba(0, 70, 191, 0.25);
 }
 
 .home-card-icon {
@@ -382,17 +381,13 @@ body {
 /* ---------- Home: refinamientos ---------- */
 
 .home-logo {
-  width: 96px;
-  aspect-ratio: 3.4;
-  overflow: hidden;
+  width: 88px;
 }
 
 .home-logo img {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: scale(1.4);
+  height: auto;
 }
 
 .home-welcome {
@@ -423,7 +418,7 @@ body {
 
 .home-card--primary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 8px 20px rgba(0, 71, 187, 0.3);
+  box-shadow: 0 8px 20px rgba(0, 70, 191, 0.3);
 }
 
 .home-card--primary:active {
@@ -573,5 +568,227 @@ body {
   .Toastify__toast-container {
     top: max(8px, env(safe-area-inset-top));
     padding: 0 8px;
+  }
+}
+
+/* ---------- Importación del catálogo ---------- */
+
+.catalog-card {
+  align-items: stretch;
+}
+
+.catalog-card + .catalog-card,
+.catalog-card + .catalog-error,
+.catalog-error + .catalog-card {
+  margin-top: 20px;
+}
+
+.catalog-step-title {
+  margin: 0 0 6px;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--tigre-navy);
+}
+
+.catalog-card .twofa-text {
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.catalog-columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 20px;
+  padding: 0;
+  list-style: none;
+}
+
+.catalog-columns li {
+  padding: 4px 10px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--tigre-blue);
+  background: var(--tigre-blue-soft);
+  border-radius: 999px;
+}
+
+.form-secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 12px 16px;
+  font: inherit;
+  font-weight: 600;
+  font-size: 1rem;
+  -webkit-appearance: none;
+  appearance: none;
+  color: var(--tigre-blue);
+  background: var(--tigre-surface);
+  border: 1px solid var(--tigre-blue);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.form-secondary:hover {
+  background: var(--tigre-blue-soft);
+}
+
+.form-secondary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--tigre-focus);
+}
+
+/* El input queda invisible pero enfocable: el label hace de zona para elegir el archivo */
+.catalog-file {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 24px 16px;
+  text-align: center;
+  color: var(--tigre-muted);
+  background: var(--tigre-bg);
+  border: 1.5px dashed var(--tigre-border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.catalog-file:hover,
+.catalog-file:focus-within {
+  border-color: var(--tigre-blue);
+}
+
+.catalog-file:focus-within {
+  box-shadow: 0 0 0 3px var(--tigre-focus);
+}
+
+.catalog-file input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.catalog-file--selected {
+  color: var(--tigre-blue);
+  background: var(--tigre-surface);
+  border-style: solid;
+  border-color: var(--tigre-blue);
+}
+
+.catalog-file-name {
+  font-weight: 600;
+  color: var(--tigre-navy);
+  overflow-wrap: anywhere;
+}
+
+.catalog-file-hint {
+  font-size: 0.8125rem;
+}
+
+.loader-pata {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--tigre-muted);
+}
+
+.loader-pata img {
+  display: block;
+  width: 140px;
+  height: auto;
+}
+
+.catalog-error p {
+  margin: 0;
+}
+
+.catalog-error ul {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  font-weight: 500;
+}
+
+.catalog-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.catalog-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 12px 8px;
+  background: var(--tigre-bg);
+  border-radius: 8px;
+}
+
+.catalog-stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--tigre-navy);
+}
+
+.catalog-stat-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--tigre-muted);
+}
+
+.catalog-stat--ok .catalog-stat-value {
+  color: var(--tigre-success);
+}
+
+.catalog-stat--rejected .catalog-stat-value {
+  color: var(--tigre-error);
+}
+
+.catalog-rejections-title {
+  margin: 20px 0 4px;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--tigre-navy);
+}
+
+.catalog-rejections {
+  max-height: 320px;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+  border-top: 1px solid var(--tigre-border);
+}
+
+.catalog-rejections li {
+  display: flex;
+  gap: 12px;
+  padding: 10px 0;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  border-bottom: 1px solid var(--tigre-border);
+}
+
+.catalog-rejection-row {
+  flex-shrink: 0;
+  min-width: 60px;
+  font-weight: 700;
+  color: var(--tigre-navy);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .form-secondary,
+  .catalog-file {
+    transition: none;
   }
 }

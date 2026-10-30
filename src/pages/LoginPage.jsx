@@ -1,5 +1,5 @@
 import LoginForm from '../components/auth/LoginForm.jsx'
-import logo from '../assets/LOGO_TIGRE.png'
+import logo from '../assets/logo-tigre.svg'
 
 const LoginPage = () => {
   return (

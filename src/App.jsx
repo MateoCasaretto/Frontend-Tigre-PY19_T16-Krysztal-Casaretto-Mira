@@ -7,6 +7,7 @@ import HomePage from './pages/HomePage'
 import DobleFactorPage from './pages/DobleFactorPage'
 import ProtectedRoute from './guards/ProtectedRoute'
 import RegisterPage from './pages/RegisterPage'
+import CatalogImportPage from './pages/CatalogImportPage'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
          <Route path="/home" element={<HomePage />} />
          <Route path="/doble-factor" element={<DobleFactorPage />} />
          <Route path="/register" element={<RegisterPage />} />
+         <Route path="/importar-catalogo" element={<CatalogImportPage />} />
       </Route>
     </Routes>
     <ToastContainer position="top-right" autoClose={4000} theme="light" />

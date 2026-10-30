@@ -27,6 +27,7 @@ const IconoArchivo = () => (
 )
 
 const COLUMNAS = ['Código SAP', 'Descripción', 'Categoría', 'Línea de producto']
+const COLUMNAS_OPCIONALES = ['Código de barras']
 const EXTENSIONES = ['.xlsx', '.csv']
 
 const formatearTamano = (bytes) => (bytes < 1024 * 1024 ? `${Math.ceil(bytes / 1024)} KB` : `${(bytes / 1024 / 1024).toFixed(1)} MB`)
@@ -115,9 +116,10 @@ const CatalogImportPage = () => {
       <main className="home-content">
         <section className="twofa-card catalog-card">
           <h2 className="catalog-step-title">1. Descargá la plantilla</h2>
-          <p className="twofa-text">Completala con los productos exportados de SAP. Todas las columnas son obligatorias:</p>
+          <p className="twofa-text">Completala con los productos exportados de SAP. El código de barras del envase es opcional; las demás columnas son obligatorias:</p>
           <ul className="catalog-columns">
             {COLUMNAS.map((columna) => <li key={columna}>{columna}</li>)}
+            {COLUMNAS_OPCIONALES.map((columna) => <li key={columna} className="catalog-column--optional">{columna} (opcional)</li>)}
           </ul>
           <button type="button" className="form-secondary" onClick={apiDescargarPlantilla}>
             <IconoDescarga />
@@ -187,6 +189,13 @@ const CatalogImportPage = () => {
                 <span className="catalog-stat-label">Rechazados</span>
               </div>
             </div>
+            {resultado.assignedBarcodes > 0 && (
+              <p className="catalog-barcodes">
+                {resultado.assignedBarcodes === 1
+                  ? 'Se asoció 1 código de barras.'
+                  : `Se asociaron ${resultado.assignedBarcodes} códigos de barras.`}
+              </p>
+            )}
 
             {resultado.rejections.length > 0 && (
               <>

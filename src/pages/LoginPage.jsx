@@ -1,13 +1,11 @@
 import LoginForm from '../components/auth/LoginForm.jsx'
-import logo from '../assets/logo-tigre.svg'
+import AuthBrand from '../components/auth/AuthBrand.jsx'
 
 const LoginPage = () => {
   return (
     <div className="auth-page">
+      <AuthBrand />
       <div className="auth-card">
-        <div className="auth-logo">
-          <img src={logo} alt="Tigre" />
-        </div>
         <h1 className="auth-title">Iniciar sesión</h1>
         <p className="auth-subtitle">Ingresá tus credenciales para continuar</p>
         <LoginForm />

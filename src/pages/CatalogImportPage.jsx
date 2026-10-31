@@ -1,15 +1,9 @@
 import { useId, useState } from 'react'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import LoaderPata from '../components/common/LoaderPata'
-
-const IconoVolver = () => (
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M15 5l-7 7 7 7" />
-  </svg>
-)
+import AppLayout from '../components/layout/AppLayout'
 
 const IconoDescarga = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -40,7 +34,6 @@ const CatalogImportPage = () => {
   const [error, setError] = useState(null)
   const [claveInput, setClaveInput] = useState(0)
   const token = useSelector((state) => state.usuario.token)
-  const navigate = useNavigate()
 
   const apiDescargarPlantilla = () => {
     axios
@@ -104,117 +97,107 @@ const CatalogImportPage = () => {
   }
 
   return (
-    <div className="home">
-      <header className="home-header">
-        <button type="button" className="page-back" onClick={() => navigate('/home')} aria-label="Volver al inicio">
-          <IconoVolver />
+    <AppLayout title="Importar catálogo" back>
+      <section className="twofa-card catalog-card">
+        <h2 className="catalog-step-title">1. Descargá la plantilla</h2>
+        <p className="twofa-text">Completala con los productos exportados de SAP. El código de barras del envase es opcional; las demás columnas son obligatorias:</p>
+        <ul className="catalog-columns">
+          {COLUMNAS.map((columna) => <li key={columna}>{columna}</li>)}
+          {COLUMNAS_OPCIONALES.map((columna) => <li key={columna} className="catalog-column--optional">{columna} (opcional)</li>)}
+        </ul>
+        <button type="button" className="form-secondary" onClick={apiDescargarPlantilla}>
+          <IconoDescarga />
+          Descargar plantilla
         </button>
-        <h1 className="home-header-title">Importar catálogo</h1>
-        <span className="page-back-spacer" aria-hidden="true" />
-      </header>
+      </section>
 
-      <main className="home-content">
-        <section className="twofa-card catalog-card">
-          <h2 className="catalog-step-title">1. Descargá la plantilla</h2>
-          <p className="twofa-text">Completala con los productos exportados de SAP. El código de barras del envase es opcional; las demás columnas son obligatorias:</p>
-          <ul className="catalog-columns">
-            {COLUMNAS.map((columna) => <li key={columna}>{columna}</li>)}
-            {COLUMNAS_OPCIONALES.map((columna) => <li key={columna} className="catalog-column--optional">{columna} (opcional)</li>)}
-          </ul>
-          <button type="button" className="form-secondary" onClick={apiDescargarPlantilla}>
-            <IconoDescarga />
-            Descargar plantilla
-          </button>
-        </section>
+      <section className="twofa-card catalog-card">
+        <h2 className="catalog-step-title">2. Subí el archivo</h2>
+        <p className="twofa-text">Los productos nuevos se dan de alta y los existentes se actualizan por su código SAP. El stock y las ubicaciones no cambian.</p>
 
-        <section className="twofa-card catalog-card">
-          <h2 className="catalog-step-title">2. Subí el archivo</h2>
-          <p className="twofa-text">Los productos nuevos se dan de alta y los existentes se actualizan por su código SAP. El stock y las ubicaciones no cambian.</p>
-
-          <form className="auth-form" onSubmit={apiImportarCatalogo}>
-            <label htmlFor={idArchivo} className={`catalog-file${archivo ? ' catalog-file--selected' : ''}`}>
-              <IconoArchivo />
-              {archivo ? (
-                <>
-                  <span className="catalog-file-name">{archivo.name}</span>
-                  <span className="catalog-file-hint">{formatearTamano(archivo.size)} · Tocá para cambiarlo</span>
-                </>
-              ) : (
-                <>
-                  <span className="catalog-file-name">Elegí un archivo</span>
-                  <span className="catalog-file-hint">Excel (.xlsx) o CSV, hasta 5 MB</span>
-                </>
-              )}
-              <input key={claveInput} id={idArchivo} type="file" accept={EXTENSIONES.join(',')} onChange={elegirArchivo} disabled={importando} />
-            </label>
-
-            {importando ? (
-              <LoaderPata texto="Importando catálogo..." />
+        <form className="auth-form" onSubmit={apiImportarCatalogo}>
+          <label htmlFor={idArchivo} className={`catalog-file${archivo ? ' catalog-file--selected' : ''}`}>
+            <IconoArchivo />
+            {archivo ? (
+              <>
+                <span className="catalog-file-name">{archivo.name}</span>
+                <span className="catalog-file-hint">{formatearTamano(archivo.size)} · Tocá para cambiarlo</span>
+              </>
             ) : (
-              <button type="submit" className="form-submit" disabled={!archivo}>Importar</button>
+              <>
+                <span className="catalog-file-name">Elegí un archivo</span>
+                <span className="catalog-file-hint">Excel (.xlsx) o CSV, hasta 5 MB</span>
+              </>
             )}
-          </form>
-        </section>
+            <input key={claveInput} id={idArchivo} type="file" accept={EXTENSIONES.join(',')} onChange={elegirArchivo} disabled={importando} />
+          </label>
 
-        {error && (
-          <section className="home-alert catalog-error" role="alert">
-            <p>{error.mensaje}</p>
-            {error.detalles.length > 0 && (
-              <ul>
-                {error.detalles.map((detalle) => (
-                  <li key={`${detalle.field}-${detalle.message}`}>
-                    {detalle.field.startsWith('fila') ? `Fila ${detalle.field.slice(5)}: ${detalle.message}` : detalle.message}
+          {importando ? (
+            <LoaderPata texto="Importando catálogo..." />
+          ) : (
+            <button type="submit" className="form-submit" disabled={!archivo}>Importar</button>
+          )}
+        </form>
+      </section>
+
+      {error && (
+        <section className="home-alert catalog-error" role="alert">
+          <p>{error.mensaje}</p>
+          {error.detalles.length > 0 && (
+            <ul>
+              {error.detalles.map((detalle) => (
+                <li key={`${detalle.field}-${detalle.message}`}>
+                  {detalle.field.startsWith('fila') ? `Fila ${detalle.field.slice(5)}: ${detalle.message}` : detalle.message}
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+      )}
+
+      {resultado && (
+        <section className="twofa-card catalog-card" aria-live="polite">
+          <h2 className="catalog-step-title">Resultado</h2>
+          <p className="twofa-text">{resultado.fileName}</p>
+          <div className="catalog-summary">
+            <div className="catalog-stat catalog-stat--ok">
+              <span className="catalog-stat-value">{resultado.importedRows}</span>
+              <span className="catalog-stat-label">Nuevos</span>
+            </div>
+            <div className="catalog-stat">
+              <span className="catalog-stat-value">{resultado.updatedRows}</span>
+              <span className="catalog-stat-label">Actualizados</span>
+            </div>
+            <div className={`catalog-stat${resultado.rejectedRows > 0 ? ' catalog-stat--rejected' : ''}`}>
+              <span className="catalog-stat-value">{resultado.rejectedRows}</span>
+              <span className="catalog-stat-label">Rechazados</span>
+            </div>
+          </div>
+          {resultado.assignedBarcodes > 0 && (
+            <p className="catalog-barcodes">
+              {resultado.assignedBarcodes === 1
+                ? 'Se asoció 1 código de barras.'
+                : `Se asociaron ${resultado.assignedBarcodes} códigos de barras.`}
+            </p>
+          )}
+
+          {resultado.rejections.length > 0 && (
+            <>
+              <h3 className="catalog-rejections-title">Filas rechazadas</h3>
+              <p className="twofa-text">Corregilas en el archivo y volvé a importarlo: las filas válidas no se duplican.</p>
+              <ul className="catalog-rejections">
+                {resultado.rejections.map((rechazo) => (
+                  <li key={rechazo.row}>
+                    <span className="catalog-rejection-row">Fila {rechazo.row}</span>
+                    <span>{rechazo.reason}</span>
                   </li>
                 ))}
               </ul>
-            )}
-          </section>
-        )}
-
-        {resultado && (
-          <section className="twofa-card catalog-card" aria-live="polite">
-            <h2 className="catalog-step-title">Resultado</h2>
-            <p className="twofa-text">{resultado.fileName}</p>
-            <div className="catalog-summary">
-              <div className="catalog-stat catalog-stat--ok">
-                <span className="catalog-stat-value">{resultado.importedRows}</span>
-                <span className="catalog-stat-label">Nuevos</span>
-              </div>
-              <div className="catalog-stat">
-                <span className="catalog-stat-value">{resultado.updatedRows}</span>
-                <span className="catalog-stat-label">Actualizados</span>
-              </div>
-              <div className={`catalog-stat${resultado.rejectedRows > 0 ? ' catalog-stat--rejected' : ''}`}>
-                <span className="catalog-stat-value">{resultado.rejectedRows}</span>
-                <span className="catalog-stat-label">Rechazados</span>
-              </div>
-            </div>
-            {resultado.assignedBarcodes > 0 && (
-              <p className="catalog-barcodes">
-                {resultado.assignedBarcodes === 1
-                  ? 'Se asoció 1 código de barras.'
-                  : `Se asociaron ${resultado.assignedBarcodes} códigos de barras.`}
-              </p>
-            )}
-
-            {resultado.rejections.length > 0 && (
-              <>
-                <h3 className="catalog-rejections-title">Filas rechazadas</h3>
-                <p className="twofa-text">Corregilas en el archivo y volvé a importarlo: las filas válidas no se duplican.</p>
-                <ul className="catalog-rejections">
-                  {resultado.rejections.map((rechazo) => (
-                    <li key={rechazo.row}>
-                      <span className="catalog-rejection-row">Fila {rechazo.row}</span>
-                      <span>{rechazo.reason}</span>
-                    </li>
-                  ))}
-                </ul>
-              </>
-            )}
-          </section>
-        )}
-      </main>
-    </div>
+            </>
+          )}
+        </section>
+      )}
+    </AppLayout>
   )
 }
 

@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import logo from '../assets/logo-tigre.svg';
+import AuthBrand from '../components/auth/AuthBrand.jsx';
 
 const ForgotPasswordPage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -35,11 +35,8 @@ const ForgotPasswordPage = () => {
 
   return (
     <div className="auth-page">
+      <AuthBrand />
       <div className="auth-card">
-        <div className="auth-logo">
-          <img src={logo} alt="Tigre" />
-        </div>
-
         <h1 className="auth-title">Recuperar contraseña</h1>
 
         {emailSent ? (

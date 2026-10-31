@@ -24,10 +24,17 @@ export const usuarioSlice = createSlice({
         setTwoFactorEnabled: (state, action) => {
             state.twoFactorEnabled = action.payload;
             localStorage.setItem("twoFactorEnabled", action.payload);
+        },
+        // Cierra la sesión: limpia el store y el localStorage
+        logout: (state) => {
+            Object.keys(state).forEach((key) => {
+                state[key] = key === "twoFactorEnabled" ? false : null;
+                localStorage.removeItem(key);
+            });
         }
     }
 });
 
-export const { setUsuario, setTwoFactorEnabled } = usuarioSlice.actions;
+export const { setUsuario, setTwoFactorEnabled, logout } = usuarioSlice.actions;
 
 export default usuarioSlice.reducer;

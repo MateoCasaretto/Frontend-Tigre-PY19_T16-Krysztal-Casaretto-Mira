@@ -9,12 +9,16 @@ import ProtectedRoute from './guards/ProtectedRoute'
 import RegisterPage from './pages/RegisterPage'
 import CatalogImportPage from './pages/CatalogImportPage'
 import BarcodePage from './pages/BarcodePage'
+import ForgotPasswordPage from './pages/ForgotPasswordPage'
+import ResetPasswordPage from './pages/ResetPasswordPage'
 
 function App() {
   return (
   <>
     <Routes>
       <Route path="/" element={<LoginPage />} />
+      <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+      <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
       <Route element={<ProtectedRoute />}>
          <Route path="/home" element={<HomePage />} />
          <Route path="/doble-factor" element={<DobleFactorPage />} />

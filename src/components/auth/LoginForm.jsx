@@ -2,7 +2,7 @@ import { useId, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { setUsuario } from '../../features/usuario.slice';
 import { toast } from 'react-toastify';
 
@@ -61,6 +61,12 @@ const LoginForm = () => {
       <div className="form-field">
         <label htmlFor={idContrasena}>Contraseña</label>
         <input type="password" id={idContrasena} {...register('contrasena', { required: true })} />
+      </div>
+
+      <div className="auth-recovery">
+        <Link to="/forgot-password">
+          ¿Olvidaste tu contraseña?
+        </Link>
       </div>
 
       {requiere2FA && (

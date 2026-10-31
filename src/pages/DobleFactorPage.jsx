@@ -4,12 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setTwoFactorEnabled } from "../features/usuario.slice";
 import { toast } from "react-toastify";
-
-const IconoVolver = () => (
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M15 5l-7 7 7 7" />
-  </svg>
-);
+import AppLayout from "../components/layout/AppLayout";
 
 const DobleFactorPage = () => {
   const [paso, setPaso] = useState("");
@@ -66,56 +61,46 @@ const DobleFactorPage = () => {
   };
 
   return (
-    <div className="home">
-      <header className="home-header">
-        <button type="button" className="page-back" onClick={() => navigate("/home")} aria-label="Volver al inicio">
-          <IconoVolver />
-        </button>
-        <h1 className="home-header-title">Doble factor</h1>
-        <span className="page-back-spacer" aria-hidden="true" />
-      </header>
+    <AppLayout title="Doble factor" back>
+      <section className="twofa-card">
+        {paso !== "Generado" ? (
+          <>
+            <p className="twofa-text">
+              Protegé tu cuenta con una app de autenticación, como Google Authenticator o Authy.
+            </p>
+            <button type="button" className="form-submit twofa-button" onClick={apiGenerarQr}>
+              Generar QR
+            </button>
+          </>
+        ) : (
+          <>
+            <p className="twofa-text">
+              Escaneá el código con tu app e ingresá los 6 dígitos que te muestra.
+            </p>
 
-      <main className="home-content">
-        <section className="twofa-card">
-          {paso !== "Generado" ? (
-            <>
-              <p className="twofa-text">
-                Protegé tu cuenta con una app de autenticación, como Google Authenticator o Authy.
-              </p>
-              <button type="button" className="form-submit twofa-button" onClick={apiGenerarQr}>
-                Generar QR
-              </button>
-            </>
-          ) : (
-            <>
-              <p className="twofa-text">
-                Escaneá el código con tu app e ingresá los 6 dígitos que te muestra.
-              </p>
+            <div className="twofa-qr">
+              <img src={qrCode} alt="Código QR para la app de autenticación" />
+            </div>
 
-              <div className="twofa-qr">
-                <img src={qrCode} alt="Código QR para la app de autenticación" />
+            <form className="auth-form" onSubmit={apiVerificarCodigo}>
+              <div className="form-field">
+                <label htmlFor="codigo-2fa">Código de autenticación</label>
+                <input
+                  id="codigo-2fa"
+                  type="text"
+                  inputMode="numeric"
+                  autoComplete="one-time-code"
+                  maxLength={6}
+                  value={codigo}
+                  onChange={(e) => setCodigo(e.target.value)}
+                />
               </div>
-
-              <form className="auth-form" onSubmit={apiVerificarCodigo}>
-                <div className="form-field">
-                  <label htmlFor="codigo-2fa">Código de autenticación</label>
-                  <input
-                    id="codigo-2fa"
-                    type="text"
-                    inputMode="numeric"
-                    autoComplete="one-time-code"
-                    maxLength={6}
-                    value={codigo}
-                    onChange={(e) => setCodigo(e.target.value)}
-                  />
-                </div>
-                <button type="submit" className="form-submit">Verificar</button>
-              </form>
-            </>
-          )}
-        </section>
-      </main>
-    </div>
+              <button type="submit" className="form-submit">Verificar</button>
+            </form>
+          </>
+        )}
+      </section>
+    </AppLayout>
   );
 };
 

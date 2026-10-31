@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import logo from '../assets/logo-tigre.svg';
+import AuthBrand from '../components/auth/AuthBrand.jsx';
 
 const ResetPasswordPage = () => {
   const { token } = useParams();
@@ -48,11 +48,8 @@ const ResetPasswordPage = () => {
 
   return (
     <div className="auth-page">
+      <AuthBrand />
       <div className="auth-card">
-        <div className="auth-logo">
-          <img src={logo} alt="Tigre" />
-        </div>
-
         {passwordUpdated ? (
           <>
             <h1 className="auth-title">Contraseña actualizada</h1>

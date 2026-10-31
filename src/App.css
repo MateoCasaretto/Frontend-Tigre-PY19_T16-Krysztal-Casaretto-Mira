@@ -31,18 +31,32 @@
 }
 
 :root {
+  /* Paleta oficial de Tigre */
   --tigre-blue: #0046bf;
-  --tigre-blue-dark: #00358f;
-  --tigre-navy: #0b1f44;
+  --tigre-blue-dark: #002375;
+  --tigre-navy: #002375;
+  --tigre-deep: #00004e;
+  --tigre-light-blue: #2ea5ff;
+  --tigre-ice: #eefaff;
   --tigre-text: #1d2433;
   --tigre-muted: #5b6577;
   --tigre-border: #cdd4e0;
-  --tigre-bg: #eef1f6;
+  --tigre-bg: #f3f4ed;
   --tigre-surface: #ffffff;
   --tigre-focus: rgba(0, 70, 191, 0.25);
   --tigre-blue-soft: #e3ecfa;
   --tigre-success: #067647;
   --tigre-error: #b42318;
+
+  /* Gradiente de la marca, como en la firma de Grupo Tigre */
+  --tigre-gradient: linear-gradient(120deg, var(--tigre-deep) 0%, var(--tigre-blue) 55%, var(--tigre-light-blue) 100%);
+  /* Malla de degradado de la marca: manchas que se desvanecen sobre una base, desenfocadas en .auth-brand::before */
+  --tigre-mesh:
+    radial-gradient(45% 55% at 95% 75%, var(--tigre-ice) 35%, transparent 100%),
+    radial-gradient(35% 40% at 72% 25%, var(--tigre-light-blue) 0%, transparent 100%),
+    radial-gradient(40% 50% at 55% 60%, var(--tigre-blue) 0%, transparent 100%),
+    radial-gradient(55% 60% at 5% 5%, var(--tigre-deep) 20%, transparent 100%),
+    linear-gradient(100deg, var(--tigre-deep) 0%, var(--tigre-navy) 35%, var(--tigre-blue) 65%, var(--tigre-light-blue) 85%, var(--tigre-ice) 100%);
 
   font-family: 'Tigre Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
   color: var(--tigre-text);
@@ -68,61 +82,111 @@ body {
 
 /* ---------- Login ---------- */
 
+/* Celular: banda con el gradiente arriba y la tarjeta montada encima */
 .auth-page {
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 24px;
-  padding: 32px 16px;
-  padding-left: max(16px, env(safe-area-inset-left));
-  padding-right: max(16px, env(safe-area-inset-right));
-  padding-bottom: max(32px, env(safe-area-inset-bottom));
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
+}
+
+.auth-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 32px 24px 72px;
+  padding-top: max(32px, env(safe-area-inset-top));
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: #fff;
+  background: var(--tigre-deep);
+}
+
+/* El desenfoque funde las manchas de la malla; el margen negativo evita bordes claros */
+.auth-brand::before {
+  content: '';
+  position: absolute;
+  inset: -15%;
+  z-index: -1;
+  background: var(--tigre-mesh);
+  filter: blur(40px);
+}
+
+.auth-brand-logo {
+  display: block;
+  width: 160px;
+  height: auto;
+}
+
+.auth-brand-text {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  opacity: 0.9;
 }
 
 .auth-card {
-  width: 100%;
+  position: relative; /* queda por encima de la banda de marca, que también está posicionada */
+  width: calc(100% - 32px);
   max-width: 420px;
+  margin-top: -48px;
   background: var(--tigre-surface);
-  border-top: 4px solid var(--tigre-blue);
-  border-radius: 4px;
-  box-shadow: 0 1px 2px rgba(11, 31, 68, 0.08), 0 8px 24px rgba(11, 31, 68, 0.08);
-  padding: 32px 40px 40px;
-}
-
-/* Logo en SVG con el viewBox recortado al dibujo: no necesita recorte ni zoom */
-.auth-logo {
-  width: 200px;
-  margin: 0 auto 20px;
-}
-
-.auth-logo img {
-  display: block;
-  width: 100%;
-  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 35, 117, 0.08), 0 12px 32px rgba(0, 35, 117, 0.14);
+  padding: 28px 20px 32px;
 }
 
 .auth-title {
   margin: 0 0 4px;
-  text-align: center;
   font-size: 1.375rem;
   font-weight: 700;
   color: var(--tigre-navy);
 }
 
 .auth-subtitle {
-  margin: 0 0 28px;
-  text-align: center;
+  margin: 0 0 24px;
   font-size: 0.9rem;
+  line-height: 1.5;
   color: var(--tigre-muted);
 }
 
 .auth-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
+}
+
+.auth-recovery {
+  margin-top: 4px;
+  text-align: right;
+  font-size: 0.875rem;
+}
+
+.auth-card > .auth-recovery {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.auth-recovery a {
+  font-weight: 600;
+  color: var(--tigre-blue);
+  text-decoration: none;
+}
+
+.auth-recovery a:hover {
+  text-decoration: underline;
+}
+
+.auth-recovery a:focus-visible {
+  outline: none;
+  border-radius: 2px;
+  box-shadow: 0 0 0 3px var(--tigre-focus);
 }
 
 .form-field {
@@ -206,48 +270,61 @@ body {
 }
 
 .auth-footer {
-  margin: 0;
+  margin: 24px 0 0;
   font-size: 0.75rem;
   color: var(--tigre-muted);
 }
 
-@media (max-width: 480px) {
+/* PC: marca a la izquierda, formulario a la derecha */
+@media (min-width: 900px) {
   .auth-page {
-    justify-content: flex-start; /* arriba, para que el teclado no tape el formulario */
-    padding-top: max(24px, env(safe-area-inset-top));
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    grid-template-rows: 1fr auto;
+    align-items: stretch;
+    padding: 0;
+    background: var(--tigre-surface);
+  }
+
+  .auth-brand {
+    grid-row: 1 / -1;
+    justify-content: center;
     gap: 16px;
+    padding: 48px;
+  }
+
+  .auth-brand-logo {
+    width: min(320px, 70%);
+  }
+
+  .auth-brand-text {
+    font-size: 1.125rem;
   }
 
   .auth-card {
-    padding: 24px 20px 32px;
-  }
-
-  .auth-logo {
-    width: 168px;
-    margin-bottom: 16px;
+    align-self: center;
+    justify-self: center;
+    width: 100%;
+    margin: 0;
+    padding: 48px;
+    border-radius: 0;
+    box-shadow: none;
   }
 
   .auth-title {
-    font-size: 1.25rem;
+    font-size: 1.75rem;
   }
 
-  .auth-subtitle {
-    margin-bottom: 24px;
-  }
-
-  .auth-form {
-    gap: 18px;
+  .auth-footer {
+    justify-self: center;
+    margin: 0 0 24px;
   }
 }
 
 @media (max-width: 360px) {
-  .auth-page {
-    padding-left: 12px;
-    padding-right: 12px;
-  }
-
   .auth-card {
-    padding: 20px 16px 28px;
+    width: calc(100% - 24px);
+    padding: 24px 16px 28px;
   }
 }
 
@@ -258,62 +335,161 @@ body {
   }
 }
 
-/* ---------- Home ---------- */
+/* ---------- Pantallas con sesión (AppLayout) ---------- */
 
-.home {
+.app {
   min-height: 100vh;
   min-height: 100dvh;
-  max-width: 480px;
-  margin: 0 auto;
   background: var(--tigre-bg);
 }
 
-.home-header {
+/* Header de marca a todo el ancho; el contenido interno se alinea con .app-content */
+.app-header {
   position: sticky;
   top: 0;
   z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 16px;
-  padding-top: max(14px, env(safe-area-inset-top));
-  background: var(--tigre-surface);
-  border-bottom: 1px solid var(--tigre-border);
+  color: #fff;
+  background: var(--tigre-gradient);
+  box-shadow: 0 2px 12px rgba(0, 35, 117, 0.2);
 }
 
-.home-header-title {
+.app-header-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 1040px;
+  min-height: 64px;
+  margin: 0 auto;
+  padding: 8px 16px;
+  padding-top: max(8px, env(safe-area-inset-top));
+  padding-left: max(16px, env(safe-area-inset-left));
+  padding-right: max(16px, env(safe-area-inset-right));
+}
+
+.app-header-logo {
+  display: block;
+  width: 84px;
+  height: auto;
+  flex-shrink: 0;
+}
+
+.app-header-title {
+  flex: 1;
+  min-width: 0;
   margin: 0;
   font-size: 1.125rem;
   font-weight: 700;
-  color: var(--tigre-navy);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.home-profile {
+.app-user {
+  display: none;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.25;
+}
+
+.app-user-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.app-user-role {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.app-header-button {
   display: grid;
   place-items: center;
+  flex-shrink: 0;
   width: 44px;
   height: 44px;
   padding: 0;
-  color: var(--tigre-navy);
-  background: var(--tigre-bg);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
   border: none;
   border-radius: 50%;
   cursor: pointer;
+  transition: background 0.15s;
 }
 
-.home-profile:focus-visible,
+.app-header-button:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.app-header-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6);
+}
+
+.app-content {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 20px 16px 32px;
+  padding-bottom: max(32px, env(safe-area-inset-bottom));
+}
+
+/* En el celular, con el botón volver, el logo se oculta para dejarle lugar al título */
+@media (max-width: 599px) {
+  .app-header-logo--secondary {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .app-header-inner {
+    gap: 16px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .app-header-logo {
+    width: 104px;
+  }
+
+  .app-header-logo + .app-header-title {
+    padding-left: 16px;
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .app-user {
+    display: flex;
+  }
+
+  .app-content {
+    max-width: 720px;
+    padding: 32px 24px 48px;
+  }
+
+  /* La home aprovecha el ancho: tarjetas en grilla */
+  .app-content:has(.home-grid) {
+    max-width: 1040px;
+  }
+
+  .home-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-header-button {
+    transition: none;
+  }
+}
+
+/* ---------- Home ---------- */
+
+.home-grid {
+  display: grid;
+  gap: 16px;
+}
+
 .home-card:focus-visible {
   outline: none;
   box-shadow: 0 0 0 3px var(--tigre-focus);
-}
-
-.home-card + .home-card {
-  margin-top: 20px;
-}
-
-.home-content {
-  padding: 20px 16px 32px;
-  padding-bottom: max(32px, env(safe-area-inset-bottom));
 }
 
 .home-greeting {
@@ -332,14 +508,22 @@ body {
   padding: 20px;
   font: inherit;
   text-align: left;
-  border: 1px solid var(--tigre-border);
-  border-radius: 12px;
+  color: var(--tigre-navy);
+  background: var(--tigre-surface);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 35, 117, 0.08), 0 8px 24px rgba(0, 35, 117, 0.08);
   cursor: pointer;
+}
+
+button.home-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 1px 2px rgba(0, 35, 117, 0.08), 0 12px 28px rgba(0, 35, 117, 0.14);
 }
 
 .home-card--primary {
   color: #fff;
-  background: linear-gradient(110deg, var(--tigre-navy) 0%, var(--tigre-blue) 100%);
+  background: var(--tigre-gradient);
   border-color: transparent;
   box-shadow: 0 4px 14px rgba(0, 70, 191, 0.25);
 }
@@ -379,16 +563,6 @@ body {
 }
 
 /* ---------- Home: refinamientos ---------- */
-
-.home-logo {
-  width: 88px;
-}
-
-.home-logo img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
 
 .home-welcome {
   display: flex;
@@ -445,44 +619,14 @@ body {
 
 /* ---------- Seguridad (doble factor) ---------- */
 
-.home-header:has(.page-back) {
-  padding-left: 8px;
-}
-
-.page-back,
-.page-back-spacer {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-}
-
-.page-back {
-  padding: 0;
-  color: var(--tigre-navy);
-  background: transparent;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-.page-back:hover {
-  background: var(--tigre-bg);
-}
-
-.page-back:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px var(--tigre-focus);
-}
-
 .twofa-card {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 24px 20px;
   background: var(--tigre-surface);
-  border: 1px solid var(--tigre-border);
-  border-radius: 12px;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 35, 117, 0.08), 0 8px 24px rgba(0, 35, 117, 0.08);
 }
 
 .twofa-text {
@@ -540,7 +684,7 @@ body {
   line-height: 1.4;
   border-left: 4px solid var(--tigre-blue);
   border-radius: 6px;
-  box-shadow: 0 1px 2px rgba(11, 31, 68, 0.08), 0 8px 24px rgba(11, 31, 68, 0.14);
+  box-shadow: 0 1px 2px rgba(0, 35, 117, 0.08), 0 8px 24px rgba(0, 35, 117, 0.14);
 }
 
 .Toastify__toast--success {

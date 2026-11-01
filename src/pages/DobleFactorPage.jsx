@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setTwoFactorEnabled } from "../features/usuario.slice";
+import { setTwoFactorEnabled, setToken } from "../features/usuario.slice";
 import { toast } from "react-toastify";
 import AppLayout from "../components/layout/AppLayout";
 
@@ -48,7 +48,8 @@ const DobleFactorPage = () => {
           },
         },
       )
-      .then(() => {
+      .then((response) => {
+        dispatch(setToken(response.data.token));
         dispatch(setTwoFactorEnabled(true));
         navigate("/home", { replace: true });
         toast.success("Verificación exitosa. La autenticación de dos factores ha sido habilitada.");

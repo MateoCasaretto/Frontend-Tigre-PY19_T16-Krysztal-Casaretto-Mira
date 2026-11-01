@@ -41,9 +41,13 @@ const LoginForm = () => {
         }));
 
         console.log(response.data.twoFactorEnabled, response.data.userId);
-        toast.success('Inicio de sesión exitoso');
+        toast.success('Credenciales verificadas correctamente');
 
-        navigate('/home', { replace: true });
+        if (response.data.twoFactorEnabled) {
+          navigate('/home', { replace: true });
+        } else {
+          navigate('/doble-factor', { replace: true });
+        }
       }).catch((error) => {
         console.error('Error al iniciar sesión:', error);
         toast.error('Error al iniciar sesión. Por favor, verifica tus credenciales.');

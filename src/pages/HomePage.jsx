@@ -76,17 +76,18 @@ const HomePage = () => {
           </div>
         )}
 
-        <button type="button" className="home-card" onClick={() => navigate('/register')}>
-          <span className="home-card-icon"><IconoUsuario /></span>
-          <span className="home-card-text">
-            <span className="home-card-title">Registrar usuario</span>
-            <span className="home-card-sub">Dar de alta un nuevo usuario</span>
-          </span>
-          <span className="home-card-arrow"><IconoFlecha /></span>
-        </button>
-
+  
         {rol === 'Administrador' && (
           <>
+            <button type="button" className="home-card" onClick={() => navigate('/register')}>
+              <span className="home-card-icon"><IconoUsuario /></span>
+              <span className="home-card-text">
+                <span className="home-card-title">Registrar usuario</span>
+                <span className="home-card-sub">Dar de alta un nuevo usuario</span>
+              </span>
+              <span className="home-card-arrow"><IconoFlecha /></span>
+            </button>
+            
             <button type="button" className="home-card" onClick={() => navigate('/importar-catalogo')}>
               <span className="home-card-icon"><IconoCatalogo /></span>
               <span className="home-card-text">
@@ -95,17 +96,16 @@ const HomePage = () => {
               </span>
               <span className="home-card-arrow"><IconoFlecha /></span>
             </button>
-
-            <button type="button" className="home-card" onClick={() => navigate('/codigos-de-barras')}>
+          </>
+        )}
+          <button type="button" className="home-card" onClick={() => navigate('/codigos-de-barras')}>
               <span className="home-card-icon"><IconoCodigoBarras /></span>
               <span className="home-card-text">
                 <span className="home-card-title">Códigos de barras</span>
                 <span className="home-card-sub">Asociar el código del envase al código SAP</span>
               </span>
               <span className="home-card-arrow"><IconoFlecha /></span>
-            </button>
-          </>
-        )}
+          </button>
       </div>
     </AppLayout>
   )

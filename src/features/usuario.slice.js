@@ -25,6 +25,10 @@ export const usuarioSlice = createSlice({
             state.twoFactorEnabled = action.payload;
             localStorage.setItem("twoFactorEnabled", action.payload);
         },
+        setToken: (state, action) => {
+            state.token = action.payload;
+            localStorage.setItem("token", action.payload);
+        },
         // Cierra la sesión: limpia el store y el localStorage
         logout: (state) => {
             Object.keys(state).forEach((key) => {
@@ -35,6 +39,6 @@ export const usuarioSlice = createSlice({
     }
 });
 
-export const { setUsuario, setTwoFactorEnabled, logout } = usuarioSlice.actions;
+export const { setUsuario, setTwoFactorEnabled, setToken, logout } = usuarioSlice.actions;
 
 export default usuarioSlice.reducer;

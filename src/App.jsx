@@ -14,21 +14,25 @@ import ResetPasswordPage from './pages/ResetPasswordPage'
 
 function App() {
   return (
-  <>
-    <Routes>
-      <Route path="/" element={<LoginPage />} />
-      <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-      <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
-      <Route element={<ProtectedRoute />}>
-         <Route path="/home" element={<HomePage />} />
-         <Route path="/doble-factor" element={<DobleFactorPage />} />
-         <Route path="/register" element={<RegisterPage />} />
-         <Route path="/importar-catalogo" element={<CatalogImportPage />} />
-         <Route path="/codigos-de-barras" element={<BarcodePage />} />
-      </Route>
-    </Routes>
-    <ToastContainer position="top-right" autoClose={4000} theme="light" />
-  </>
+    <>
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
+
+        <Route element={<ProtectedRoute />}>
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/doble-factor" element={<DobleFactorPage />} />
+          <Route path="/codigos-de-barras" element={<BarcodePage />} />
+            <Route element={<ProtectedRoute allowedRoles={['Administrador']} />}>
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/importar-catalogo" element={<CatalogImportPage />} />
+            </Route>
+        </Route>
+      </Routes>
+
+      <ToastContainer position="top-right" autoClose={4000} theme="light" />
+    </>
   )
 }
 

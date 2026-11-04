@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import AppLayout from '../components/layout/AppLayout'
+import AdminNavCardsComponent from '../components/layout/AdminNavCardsComponent'
 
 const IconoEscudo = () => (
   <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -96,6 +97,8 @@ const HomePage = () => {
               </span>
               <span className="home-card-arrow"><IconoFlecha /></span>
             </button>
+
+            <AdminNavCardsComponent />
           </>
         )}
           <button type="button" className="home-card" onClick={() => navigate('/codigos-de-barras')}>

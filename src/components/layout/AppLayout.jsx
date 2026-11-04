@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { logout } from '../../features/usuario.slice'
 import logo from '../../assets/logo-tigre-blanco.svg'
+import WarehouseChipComponent from '../warehouses/WarehouseChipComponent'
 
 const IconoVolver = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -39,6 +40,7 @@ const AppLayout = ({ title, back = false, children }) => {
           )}
           <img className={back ? 'app-header-logo app-header-logo--secondary' : 'app-header-logo'} src={logo} alt="Tigre" />
           <h1 className="app-header-title">{title}</h1>
+          <WarehouseChipComponent />
           <div className="app-user">
             <span className="app-user-name">{nombreUsuario}</span>
             {rol && <span className="app-user-role">{rol}</span>}

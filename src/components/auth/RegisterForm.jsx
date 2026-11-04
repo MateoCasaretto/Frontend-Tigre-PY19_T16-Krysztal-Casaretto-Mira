@@ -1,7 +1,8 @@
 import { useId } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import OperatorWarehousesFieldComponent from '../warehouses/OperatorWarehousesFieldComponent';
 
 const RegisterForm = () => {
   const idEmail = useId();
@@ -10,13 +11,14 @@ const RegisterForm = () => {
   const idRepetirContrasena = useId();
   const idRol = useId();
 
-  const { register, handleSubmit, reset, getValues, formState: { isValid } } = useForm({ mode: 'onChange' });
+  const { register, handleSubmit, reset, getValues, control, formState: { isValid } } = useForm({ mode: 'onChange' });
+  const rol = useWatch({ control, name: 'rol' });
 
-  const apiRegister = ({ email, nombreUsuario, contrasena, repetirContrasena, rol }) => {
+  const apiRegister = ({ email, nombreUsuario, contrasena, repetirContrasena, rol, warehouses }) => {
     const token = localStorage.getItem("token");
     console.log(token);
     
-    axios.post("http://localhost:8080/v1/auth/registro", { email, nombreUsuario, contrasena, repetirContrasena, rol }, {
+    axios.post("http://localhost:8080/v1/auth/registro", { email, nombreUsuario, contrasena, repetirContrasena, rol, warehouses }, {
       headers: {
         Authorization: `Bearer ${token}`,//no es necesario mandar id porque viaja en el token
       },
@@ -71,6 +73,8 @@ const RegisterForm = () => {
             <option value="Administrador">Administrador</option>
           </select>
         </div>
+
+        {rol === 'Operario' && <OperatorWarehousesFieldComponent control={control} />}
 
         <input className="form-submit" type="submit" value="Registrar usuario" disabled={!isValid} />
       </form>

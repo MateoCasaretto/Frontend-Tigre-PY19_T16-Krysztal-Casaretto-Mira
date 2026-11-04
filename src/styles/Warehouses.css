@@ -1,0 +1,173 @@
+/* CU17: plantas y usuarios. Lo común sale de App.css; acá va solo lo nuevo */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Chip de la planta actual en el encabezado */
+.warehouse-chip {
+  display: inline-flex;
+  flex-shrink: 1;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  max-width: 128px;
+  min-height: 36px;
+  margin-left: auto;
+  padding: 4px 10px;
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.warehouse-chip:hover {
+  background: rgba(255, 255, 255, 0.26);
+}
+
+.warehouse-chip:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.warehouse-chip svg {
+  flex-shrink: 0;
+}
+
+.warehouse-chip-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* En el celular, la home ya saluda debajo del encabezado: el chip usa el lugar del título */
+@media (max-width: 599px) {
+  .app-header-logo:not(.app-header-logo--secondary) ~ .app-header-title:has(~ .warehouse-chip) {
+    display: none;
+  }
+
+  .warehouse-chip {
+    max-width: 104px;
+  }
+}
+
+@media (min-width: 768px) {
+  .warehouse-chip {
+    max-width: 200px;
+  }
+}
+
+/* Lista de plantas para elegir una o varias */
+.warehouse-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  margin: 0 0 16px;
+  padding: 0;
+  border: 0;
+}
+
+.warehouse-options-legend {
+  margin-bottom: 6px;
+  padding: 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--tigre-navy);
+}
+
+.warehouse-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 12px;
+  background: var(--tigre-surface);
+  border: 1px solid var(--tigre-border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.warehouse-option:has(input:checked) {
+  background: var(--tigre-blue-soft);
+  border-color: var(--tigre-blue);
+}
+
+.warehouse-option:has(input:focus-visible) {
+  box-shadow: 0 0 0 3px var(--tigre-focus);
+}
+
+.warehouse-option input {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  accent-color: var(--tigre-blue);
+  cursor: pointer;
+}
+
+.warehouse-option-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.warehouse-option-name {
+  font-weight: 600;
+  color: var(--tigre-navy);
+}
+
+.warehouse-option-address {
+  font-size: 0.875rem;
+  color: var(--tigre-muted);
+}
+
+.warehouse-link {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+}
+
+/* Avisos y usuarios */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.empty-state .home-alert {
+  margin: 0;
+}
+
+.user-warehouses {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.barcode-results.user-list {
+  max-height: none;
+  overflow: visible;
+}
+
+.barcode-result.user-readonly {
+  cursor: default;
+}
+
+.barcode-result.user-readonly:hover {
+  background: var(--tigre-surface);
+  border-color: var(--tigre-border);
+}

@@ -18,13 +18,14 @@ const IconoSalir = () => (
 )
 
 // Estructura común de las pantallas con sesión: header de marca a todo el ancho y contenido centrado
-const AppLayout = ({ title, back = false, children }) => {
+const AppLayout = ({ title, back = false, confirmLogout, children }) => {
   const nombreUsuario = useSelector((state) => state.usuario.nombreUsuario)
   const rol = useSelector((state) => state.usuario.rol)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const cerrarSesion = () => {
+  const cerrarSesion = async () => {
+    if (confirmLogout && !(await confirmLogout())) return
     dispatch(logout())
     navigate('/', { replace: true })
   }

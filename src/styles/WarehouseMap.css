@@ -1,0 +1,697 @@
+/* HT03 y CU15: mapa y editor de la estructura. Lo común sale de App.css; acá va solo lo nuevo */
+
+/* Plano */
+.map-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.map-hint {
+  margin: 0 0 8px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--tigre-navy);
+}
+
+.map-viewport {
+  position: relative;
+  height: 62dvh;
+  min-height: 320px;
+  overflow: hidden;
+  background: var(--tigre-surface);
+  border: 1px solid var(--tigre-border);
+  border-radius: 8px;
+}
+
+.map-viewport-wrapper,
+.map-viewport-content {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.map-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  user-select: none;
+}
+
+.map-floor {
+  fill: var(--tigre-surface);
+}
+
+.map-grid-line {
+  fill: none;
+  stroke: var(--tigre-border);
+  stroke-width: 0.03;
+}
+
+.map-element {
+  cursor: pointer;
+  outline: none;
+}
+
+.map-element-hit {
+  fill: transparent;
+}
+
+.map-element-body {
+  stroke: var(--tigre-muted);
+  stroke-width: 0.06;
+  transition: fill 0.15s;
+}
+
+.map-element--rack .map-element-body {
+  fill: var(--tigre-blue-soft);
+}
+
+.map-element--zone .map-element-body {
+  fill: var(--tigre-sand);
+  stroke-dasharray: 0.3 0.2;
+}
+
+.map-element-label {
+  font-weight: 600;
+  text-anchor: middle;
+  dominant-baseline: central;
+  fill: var(--tigre-navy);
+  pointer-events: none;
+}
+
+.map-element:focus-visible .map-element-body {
+  stroke: var(--tigre-light-blue);
+  stroke-width: 0.2;
+}
+
+.map-element--selected .map-element-body {
+  fill: var(--tigre-blue);
+  stroke: var(--tigre-light-blue);
+  stroke-width: 0.15;
+}
+
+.map-element--selected .map-element-label {
+  fill: var(--tigre-surface);
+}
+
+.map-editable {
+  cursor: move;
+  touch-action: none;
+}
+
+.map-handle {
+  fill: var(--tigre-surface);
+  stroke: var(--tigre-blue);
+}
+
+.map-handle-hit {
+  fill: transparent;
+}
+
+.map-zoom {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--tigre-surface);
+  border: 1px solid var(--tigre-border);
+  border-radius: 8px;
+}
+
+.map-zoom button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  color: var(--tigre-navy);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.map-zoom button + button {
+  border-top: 1px solid var(--tigre-border);
+}
+
+.map-zoom button:hover {
+  background: var(--tigre-blue-soft);
+}
+
+.map-zoom button:focus-visible {
+  outline: 2px solid var(--tigre-blue);
+  outline-offset: -2px;
+}
+
+.map-back {
+  width: 100%;
+  margin-top: 16px;
+}
+
+/* En el celular, la estantería reemplaza al plano; en la PC van lado a lado */
+.map-page--detail .map-page-plan {
+  display: none;
+}
+
+/* Tabla de la estantería */
+.rack-grid-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 3px;
+}
+
+.rack-grid {
+  display: grid;
+  gap: 4px;
+  width: max-content;
+  min-width: 100%;
+}
+
+.rack-row {
+  display: contents;
+}
+
+.rack-corner,
+.rack-level {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+}
+
+.rack-corner {
+  background: var(--tigre-surface);
+}
+
+.rack-bay {
+  display: flex;
+  gap: 3px;
+  min-width: 0;
+  padding: 3px;
+  background: var(--tigre-bg);
+  border-radius: 6px;
+}
+
+.rack-grid button {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 0 3px;
+  font: inherit;
+  font-size: 0.75rem;
+  color: var(--tigre-text);
+  background: var(--tigre-surface);
+  border: 1px solid var(--tigre-border);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.rack-grid button:disabled {
+  cursor: default;
+}
+
+.rack-grid button:focus-visible {
+  outline: 2px solid var(--tigre-blue);
+  outline-offset: 1px;
+}
+
+.rack-column {
+  height: 32px;
+  overflow: hidden;
+  font-weight: 700 !important;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rack-grid .rack-level {
+  overflow: hidden;
+  font-weight: 700;
+  color: var(--tigre-navy);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background: var(--tigre-surface);
+}
+
+.rack-position {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  height: 48px;
+}
+
+.rack-position-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rack-position svg {
+  flex-shrink: 0;
+}
+
+.rack-grid .rack-position--inactive {
+  color: var(--tigre-muted);
+  background: transparent;
+  border-style: dashed;
+  border-color: var(--tigre-muted);
+}
+
+.rack-grid .rack-position--fixed {
+  color: var(--tigre-navy);
+  background: var(--tigre-sand);
+  border-color: var(--tigre-orange);
+}
+
+.rack-grid .rack-selected {
+  color: var(--tigre-surface);
+  background: var(--tigre-blue);
+  border-color: var(--tigre-blue);
+  outline: 2px solid var(--tigre-light-blue);
+  outline-offset: 1px;
+}
+
+.map-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin: 12px 0 0;
+  padding: 0;
+  font-size: 0.8125rem;
+  color: var(--tigre-muted);
+  list-style: none;
+}
+
+.map-legend li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.map-legend-swatch {
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--tigre-border);
+  border-radius: 3px;
+}
+
+.map-legend-swatch--free {
+  background: var(--tigre-surface);
+}
+
+.map-legend-swatch--fixed {
+  background: var(--tigre-sand);
+  border-color: var(--tigre-orange);
+}
+
+.map-legend-swatch--inactive {
+  border-style: dashed;
+  border-color: var(--tigre-muted);
+}
+
+.map-position-summary {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 4px 12px;
+  margin: 16px 0 0;
+  font-size: 0.9375rem;
+}
+
+.map-position-summary dt {
+  color: var(--tigre-muted);
+}
+
+.map-position-summary dd {
+  margin: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+/* Editor */
+.editor-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.editor-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--tigre-navy);
+  overflow-wrap: anywhere;
+}
+
+.editor-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 8px;
+}
+
+.editor-actions .form-secondary,
+.editor-actions .form-submit {
+  margin: 0;
+}
+
+.editor-danger {
+  color: var(--tigre-error);
+  border-color: var(--tigre-error);
+}
+
+.editor-steppers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.editor-stepper {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) 48px;
+  gap: 4px;
+  align-items: center;
+}
+
+.editor-stepper-label {
+  grid-column: 1 / -1;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--tigre-navy);
+}
+
+.editor-stepper button {
+  height: 48px;
+  font-size: 1.25rem;
+  color: var(--tigre-blue);
+  background: var(--tigre-surface);
+  border: 1px solid var(--tigre-blue);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.editor-stepper input {
+  width: 100%;
+  height: 48px;
+  box-sizing: border-box;
+  padding: 0 4px;
+  font: inherit;
+  text-align: center;
+  border: 1px solid var(--tigre-border);
+  border-radius: 3px;
+}
+
+.editor-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 320px;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.editor-list button {
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 12px;
+  font: inherit;
+  text-align: left;
+  color: var(--tigre-text);
+  background: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+
+.editor-list button:hover {
+  background: var(--tigre-blue-soft);
+}
+
+.editor-list button[aria-pressed='true'] {
+  font-weight: 700;
+  color: var(--tigre-blue);
+  background: var(--tigre-blue-soft);
+}
+
+.editor-fixed-product {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* En el celular, el guardado queda siempre a mano */
+.editor-savebar {
+  position: sticky;
+  bottom: 0;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 8px;
+  background: var(--tigre-surface);
+  border: 1px solid var(--tigre-border);
+  border-radius: 8px;
+}
+
+.editor-savebar .form-submit,
+.editor-savebar .form-secondary {
+  margin: 0;
+}
+
+@media (min-width: 900px) {
+  .app-content:has(.map-page) {
+    max-width: 1320px;
+  }
+
+  .map-page--detail {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    align-items: start;
+  }
+
+  .map-page--detail .map-page-plan {
+    display: block;
+  }
+
+  .map-page--detail .map-back {
+    display: none;
+  }
+
+  .editor-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(300px, 1fr);
+    gap: 16px;
+    align-items: start;
+  }
+
+  /* Editor del plano: lista y alta a la izquierda; a la derecha, el tamaño y lo elegido */
+  .editor-layout--plan {
+    grid-template-columns: minmax(280px, 1fr) minmax(0, 3fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      'details main'
+      'catalog main';
+  }
+
+  .editor-layout--plan .editor-layout-main {
+    grid-area: main;
+  }
+
+  .editor-layout-catalog {
+    grid-area: catalog;
+  }
+
+  .editor-layout-details {
+    grid-area: details;
+  }
+
+  .editor-plan-size--catalog {
+    display: none;
+  }
+}
+
+@media (min-width: 1200px) {
+  .editor-layout--plan {
+    grid-template-columns: minmax(280px, 1fr) minmax(0, 3fr) minmax(280px, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas: 'catalog main details';
+  }
+}
+
+.editor-layout-main,
+.editor-layout-side {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+@media (max-width: 899px) {
+  .editor-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+/* Aviso de cambios sin guardar */
+.unsaved-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(0, 0, 78, 0.45);
+}
+
+.unsaved-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 420px;
+  padding: 24px;
+  background: var(--tigre-surface);
+  border-radius: 8px;
+}
+
+.unsaved-modal .twofa-text,
+.unsaved-modal .catalog-step-title {
+  margin: 0;
+}
+
+/* Editor del plano: ocupa toda la pantalla y solo se desplazan las columnas laterales */
+.app:has(.editor-page) {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.app-content:has(.editor-page) {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.editor-page {
+  gap: 0;
+  height: 100%;
+}
+
+.editor-page .editor-layout {
+  gap: 0;
+  height: 100%;
+}
+
+.editor-page .editor-layout-main {
+  position: relative;
+  gap: 0;
+  height: 100%;
+}
+
+.editor-page .map-viewport {
+  flex: 1;
+  height: auto;
+  min-height: 0;
+  border: none;
+  border-radius: 0;
+}
+
+.editor-page .editor-layout-side {
+  gap: 12px;
+  min-height: 0;
+  padding: 12px;
+  overflow-y: auto;
+  background: var(--tigre-bg);
+}
+
+.editor-page .editor-savebar {
+  position: absolute;
+  right: 72px;
+  bottom: 8px;
+  left: 8px;
+  max-width: 360px;
+}
+
+.editor-catalog-toggle {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 2;
+  min-height: 44px;
+  padding: 8px 14px;
+  font: inherit;
+  font-weight: 600;
+  color: var(--tigre-blue);
+  background: var(--tigre-surface);
+  border: 1px solid var(--tigre-blue);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* En el celular, el plano ocupa todo y los paneles suben desde abajo solo cuando hacen falta */
+@media (max-width: 899px) {
+  .editor-page .editor-layout-main {
+    flex: 1;
+    height: auto;
+    min-height: 0;
+  }
+
+  .editor-page .editor-layout-side {
+    flex: 0 0 auto;
+    max-height: 50dvh;
+    border-top: 1px solid var(--tigre-border);
+  }
+
+  .editor-page .editor-layout-catalog,
+  .editor-plan-size--details,
+  .editor-layout--catalog-open .editor-layout-details,
+  .editor-layout--plan:not(.editor-layout--selected) .editor-layout-details {
+    display: none;
+  }
+
+  .editor-page .editor-layout--catalog-open .editor-layout-catalog {
+    display: flex;
+  }
+}
+
+@media (min-width: 900px) {
+  .editor-catalog-toggle {
+    display: none;
+  }
+
+  .editor-page .editor-layout--plan {
+    grid-template-rows: minmax(0, auto) minmax(0, 1fr);
+  }
+
+  .editor-page .editor-layout-side {
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+  .editor-page .editor-layout-details {
+    height: auto;
+    max-height: 60dvh;
+  }
+}
+
+@media (min-width: 1200px) {
+  .editor-page .editor-layout--plan {
+    grid-template-rows: minmax(0, 1fr);
+  }
+
+  .editor-page .editor-layout-details {
+    height: 100%;
+    max-height: none;
+  }
+}

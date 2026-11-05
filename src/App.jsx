@@ -16,6 +16,9 @@ import ResetPasswordPage from './pages/ResetPasswordPage'
 import WarehouseSelectionPage from './pages/WarehouseSelectionPage'
 import WarehousesPage from './pages/WarehousesPage'
 import UsersPage from './pages/UsersPage'
+import WarehouseMapPage from './pages/WarehouseMapPage'
+import WarehouseStructurePage from './pages/WarehouseStructurePage'
+import RackEditorPage from './pages/RackEditorPage'
 
 function App() {
   return (
@@ -37,10 +40,13 @@ function App() {
           <Route element={<WarehouseGuard />}>
             <Route path="/home" element={<HomePage />} />
             <Route path="/codigos-de-barras" element={<BarcodePage />} />
+            <Route path="/mapa" element={<WarehouseMapPage />} />
             <Route element={<ProtectedRoute allowedRoles={['Administrador']} />}>
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/importar-catalogo" element={<CatalogImportPage />} />
               <Route path="/usuarios" element={<UsersPage />} />
+              <Route path="/estructura-planta" element={<WarehouseStructurePage />} />
+              <Route path="/estructura-planta/:elementId" element={<RackEditorPage />} />
             </Route>
           </Route>
         </Route>

@@ -21,7 +21,15 @@ const UsersIcon = () => (
   </svg>
 )
 
+const StructureIcon = () => (
+  <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <rect x="3" y="3" width="18" height="18" rx="1" />
+    <path d="M3 9h18M3 15h18M9 3v18M15 3v18" />
+  </svg>
+)
+
 const CARDS = [
+  { path: '/estructura-planta', title: 'Estructura de planta', subtitle: 'Configurar el plano y las estanterías', Icon: StructureIcon },
   { path: '/plantas', title: 'Plantas', subtitle: 'Crear y editar las plantas', Icon: WarehouseIcon },
   { path: '/usuarios', title: 'Usuarios', subtitle: 'Asignar operarios a cada planta', Icon: UsersIcon },
 ]

@@ -6,9 +6,9 @@ const PinIcon = () => (
   </svg>
 )
 
-const positionClass = (position, selected) => {
+const positionClass = (position, selected, occupied) => {
   const state = position.active ? (position.fixedProduct ? ' rack-position--fixed' : '') : ' rack-position--inactive'
-  return `rack-position${state}${selected ? ' rack-selected' : ''}`
+  return `rack-position${state}${occupied ? ' rack-position--occupied' : ''}${selected ? ' rack-selected' : ''}`
 }
 
 const positionTitle = ({ label, active, fixedProduct }) => {
@@ -17,8 +17,8 @@ const positionTitle = ({ label, active, fixedProduct }) => {
 }
 
 // Tabla de la estantería: cada tramo es una columna de ancho fijo y dentro de cada uno las posiciones reparten el lugar.
-// Con `editable` también se pueden elegir niveles y columnas
-const RackGridComponent = ({ rack, selection, onSelect, editable = false }) => {
+// Con `editable` también se pueden elegir niveles y columnas. `occupiedIds` (opcional, CU03) pinta las posiciones con stock
+const RackGridComponent = ({ rack, selection, onSelect, editable = false, occupiedIds }) => {
   const isSelected = (type, id) => selection?.type === type && selection.id === id
   const gridStyle = {
     gridTemplateColumns: `${MIN_POSITION_WIDTH + 8}px repeat(${rack.bays.length}, minmax(${getBayMinWidth(rack)}px, 1fr))`,
@@ -58,13 +58,15 @@ const RackGridComponent = ({ rack, selection, onSelect, editable = false }) => {
             </button>
             {rack.bays.map((bay) => (
               <div key={bay._id} className="rack-bay">
-                {positionsInBay(level, bay._id).map((position) => (
+                {positionsInBay(level, bay._id).map((position) => {
+                  const occupied = position.active && Boolean(occupiedIds?.has(position._id))
+                  return (
                   <button
                     key={position._id}
                     type="button"
-                    className={positionClass(position, isSelected('position', position._id))}
+                    className={positionClass(position, isSelected('position', position._id), occupied)}
                     title={positionTitle(position)}
-                    aria-label={`Posición ${positionTitle(position)}`}
+                    aria-label={`Posición ${positionTitle(position)}${occupied ? ', ocupada' : ''}`}
                     disabled={!editable && !position.active}
                     onClick={() => onSelect({ type: 'position', id: position._id })}
                   >
@@ -75,7 +77,8 @@ const RackGridComponent = ({ rack, selection, onSelect, editable = false }) => {
                       </>
                     ) : '—'}
                   </button>
-                ))}
+                  )
+                })}
               </div>
             ))}
           </div>

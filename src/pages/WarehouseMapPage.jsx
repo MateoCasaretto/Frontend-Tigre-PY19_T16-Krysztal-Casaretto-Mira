@@ -4,10 +4,12 @@ import { Link } from 'react-router-dom'
 import AppLayout from '../components/layout/AppLayout'
 import EmptyStateComponent from '../components/common/EmptyStateComponent'
 import LoaderPata from '../components/common/LoaderPata'
-import ElementDetailComponent from '../components/map/ElementDetailComponent'
+import ElementStockDetailComponent from '../components/map/ElementStockDetailComponent'
 import MapCanvasComponent from '../components/map/MapCanvasComponent'
+import MapOccupancyLabelsComponent from '../components/map/MapOccupancyLabelsComponent'
 import MapViewportComponent from '../components/map/MapViewportComponent'
 import { useWarehouseMap } from '../hooks/useWarehouseMap'
+import { useWarehouseOccupancy } from '../hooks/useWarehouseOccupancy'
 import { getPlanSize } from '../utils/MapUtils'
 import '../styles/WarehouseMap.css'
 
@@ -17,6 +19,7 @@ const WarehouseMapPage = () => {
   const warehouseId = useSelector((state) => state.warehouse.selected?._id)
   const rol = useSelector((state) => state.usuario.rol)
   const { elements, loading, error, reload } = useWarehouseMap(warehouseId)
+  const occupancy = useWarehouseOccupancy(warehouseId)
   const [selectedId, setSelectedId] = useState(null)
   const plan = useMemo(() => getPlanSize(elements, PLAN_MARGIN), [elements])
   const selected = elements.find(({ _id }) => _id === selectedId)
@@ -39,19 +42,26 @@ const WarehouseMapPage = () => {
         {ready && (
           <>
             <div className="map-page-plan">
-              <p className="map-hint">Tocá una estantería para ver sus posiciones</p>
+              <p className="map-hint">Tocá una estantería o zona para ver qué tiene guardado</p>
               <MapViewportComponent>
                 <MapCanvasComponent
                   plan={plan}
                   elements={elements}
                   selectedId={selectedId}
                   onSelect={(element) => setSelectedId(element._id)}
-                />
+                >
+                  <MapOccupancyLabelsComponent elements={elements} occupancy={occupancy} selectedId={selectedId} />
+                </MapCanvasComponent>
               </MapViewportComponent>
             </div>
             {selected && (
               <div className="map-page-detail">
-                <ElementDetailComponent key={selected._id} element={selected} onClose={() => setSelectedId(null)} />
+                <ElementStockDetailComponent
+                  key={selected._id}
+                  warehouseId={warehouseId}
+                  element={selected}
+                  onClose={() => setSelectedId(null)}
+                />
               </div>
             )}
           </>

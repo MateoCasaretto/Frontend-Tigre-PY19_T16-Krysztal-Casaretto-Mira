@@ -266,6 +266,11 @@
   border-color: var(--tigre-orange);
 }
 
+.rack-grid .rack-position--occupied {
+  color: var(--tigre-blue);
+  background: var(--tigre-blue-soft);
+}
+
 .rack-grid .rack-selected {
   color: var(--tigre-surface);
   background: var(--tigre-blue);
@@ -307,6 +312,10 @@
   border-color: var(--tigre-orange);
 }
 
+.map-legend-swatch--occupied {
+  background: var(--tigre-blue-soft);
+}
+
 .map-legend-swatch--inactive {
   border-style: dashed;
   border-color: var(--tigre-muted);
@@ -328,6 +337,88 @@
   margin: 0;
   font-weight: 600;
   overflow-wrap: anywhere;
+}
+
+/* Ocupación en el plano (CU03): discreta, en la esquina superior derecha de cada elemento */
+.map-occupancy-label {
+  font-weight: 500;
+  text-anchor: end;
+  dominant-baseline: hanging;
+  fill: var(--tigre-muted);
+  pointer-events: none;
+}
+
+.map-occupancy-label--selected {
+  fill: var(--tigre-ice);
+}
+
+/* Contenido de una ubicación (CU08) */
+.map-position-hint {
+  margin: 16px 0 0;
+}
+
+.location-stock {
+  margin-top: 12px;
+}
+
+.location-empty {
+  margin: 0;
+  padding: 12px;
+  color: var(--tigre-muted);
+  background: var(--tigre-bg);
+  border-radius: 8px;
+}
+
+.location-products {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.location-product {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2px 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--tigre-border);
+  border-radius: 8px;
+}
+
+.location-product-code {
+  font-weight: 600;
+  color: var(--tigre-navy);
+  overflow-wrap: anywhere;
+}
+
+.location-product-quantity {
+  font-weight: 700;
+  color: var(--tigre-blue);
+  white-space: nowrap;
+}
+
+.location-product-description {
+  grid-column: 1 / -1;
+  overflow-wrap: anywhere;
+}
+
+.location-product-category {
+  grid-column: 1 / -1;
+  font-size: 0.8125rem;
+  color: var(--tigre-muted);
+}
+
+.location-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.location-actions .form-secondary {
+  margin: 0;
 }
 
 /* Editor */

@@ -19,6 +19,8 @@ import UsersPage from './pages/UsersPage'
 import WarehouseMapPage from './pages/WarehouseMapPage'
 import WarehouseStructurePage from './pages/WarehouseStructurePage'
 import RackEditorPage from './pages/RackEditorPage'
+import CycleCountsPage from './pages/CycleCountsPage'
+import MyCountTasksPage from './pages/MyCountTasksPage'
 
 function App() {
   return (
@@ -41,12 +43,16 @@ function App() {
             <Route path="/home" element={<HomePage />} />
             <Route path="/codigos-de-barras" element={<BarcodePage />} />
             <Route path="/mapa" element={<WarehouseMapPage />} />
+            <Route element={<ProtectedRoute allowedRoles={['Operario']} />}>
+              <Route path="/mis-conteos" element={<MyCountTasksPage />} />
+            </Route>
             <Route element={<ProtectedRoute allowedRoles={['Administrador']} />}>
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/importar-catalogo" element={<CatalogImportPage />} />
               <Route path="/usuarios" element={<UsersPage />} />
               <Route path="/estructura-planta" element={<WarehouseStructurePage />} />
               <Route path="/estructura-planta/:elementId" element={<RackEditorPage />} />
+              <Route path="/inventarios-ciclicos" element={<CycleCountsPage />} />
             </Route>
           </Route>
         </Route>

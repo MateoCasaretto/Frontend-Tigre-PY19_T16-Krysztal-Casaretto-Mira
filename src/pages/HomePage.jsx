@@ -39,6 +39,26 @@ const IconoCodigoBarras = () => (
   </svg>
 )
 
+
+const IconoConteo = () => (
+  <svg
+    width="30"
+    height="30"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <rect x="5" y="4" width="14" height="18" rx="2" />
+    <path d="M9 4V2h6v2" />
+    <path d="M9 11h6M9 15h6M9 19h4" />
+  </svg>
+)
+
+
 const HomePage = () => {
   const nombreUsuario = useSelector((state) => state.usuario.nombreUsuario)
   const rol = useSelector((state) => state.usuario.rol)
@@ -78,8 +98,33 @@ const HomePage = () => {
           </div>
         )}
 
-  
         <MapNavCardComponent />
+
+        {rol === 'Operario' && (
+          <button
+            type="button"
+            className="home-card"
+            onClick={() => navigate('/mis-conteos')}
+          >
+            <span className="home-card-icon">
+              <IconoConteo />
+            </span>
+
+            <span className="home-card-text">
+              <span className="home-card-title">
+                Mis tareas de conteo
+              </span>
+
+              <span className="home-card-sub">
+                Consultar los inventarios cíclicos asignados
+              </span>
+            </span>
+
+            <span className="home-card-arrow">
+              <IconoFlecha />
+            </span>
+          </button>
+        )}
 
         {rol === 'Administrador' && (
           <>
@@ -91,7 +136,7 @@ const HomePage = () => {
               </span>
               <span className="home-card-arrow"><IconoFlecha /></span>
             </button>
-            
+
             <button type="button" className="home-card" onClick={() => navigate('/importar-catalogo')}>
               <span className="home-card-icon"><IconoCatalogo /></span>
               <span className="home-card-text">
@@ -104,14 +149,14 @@ const HomePage = () => {
             <AdminNavCardsComponent />
           </>
         )}
-          <button type="button" className="home-card" onClick={() => navigate('/codigos-de-barras')}>
-              <span className="home-card-icon"><IconoCodigoBarras /></span>
-              <span className="home-card-text">
-                <span className="home-card-title">Códigos de barras</span>
-                <span className="home-card-sub">Asociar el código del envase al código SAP</span>
-              </span>
-              <span className="home-card-arrow"><IconoFlecha /></span>
-          </button>
+        <button type="button" className="home-card" onClick={() => navigate('/codigos-de-barras')}>
+          <span className="home-card-icon"><IconoCodigoBarras /></span>
+          <span className="home-card-text">
+            <span className="home-card-title">Códigos de barras</span>
+            <span className="home-card-sub">Asociar el código del envase al código SAP</span>
+          </span>
+          <span className="home-card-arrow"><IconoFlecha /></span>
+        </button>
       </div>
     </AppLayout>
   )

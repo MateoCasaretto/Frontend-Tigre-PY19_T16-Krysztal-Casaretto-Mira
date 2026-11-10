@@ -1125,3 +1125,513 @@ button.home-card:hover {
     transition: none;
   }
 }
+
+
+/* Asignación de grupos de conteo cíclico */
+
+.cycle-operators {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.cycle-operators h3,
+.cycle-group h4 {
+    margin: 0;
+    color: var(--tigre-navy);
+}
+
+.cycle-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    border: 1px solid var(--tigre-border);
+    border-radius: 8px;
+    background: var(--tigre-surface);
+    min-width: 0;
+}
+
+.cycle-groups {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.cycle-operator-search {
+    width: 100%;
+    min-height: 42px;
+    padding: 10px;
+    border: 1px solid var(--tigre-border);
+    border-radius: 6px;
+    font: inherit;
+}
+
+.cycle-operator-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.cycle-operator-option {
+    padding: 10px 14px;
+    border: 1px solid var(--tigre-border);
+    border-radius: 6px;
+    background: var(--tigre-surface);
+    color: var(--tigre-navy);
+    font: inherit;
+    cursor: grab;
+}
+
+.cycle-operator-option.selected {
+    background: var(--tigre-blue);
+    color: white;
+    border-color: var(--tigre-blue);
+}
+
+.cycle-operator {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 10px;
+    background: var(--tigre-blue-soft);
+    color: var(--tigre-navy);
+    border-radius: 6px;
+    cursor: grab;
+    overflow-wrap: anywhere;
+}
+
+.cycle-operator button {
+    border: none;
+    background: transparent;
+    color: inherit;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.cycle-selection-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.cycle-selection-actions button {
+    flex: 1;
+    font-size: 13px;
+    min-height: 40px;
+}
+
+.cycle-group-empty {
+    color: var(--tigre-muted);
+    font-size: 13px;
+    text-align: center;
+}
+
+@media (max-width: 550px) {
+    .cycle-groups {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* Listado y detalle de inventarios cíclicos */
+
+.cycle-count-card {
+    margin-bottom: 12px;
+}
+
+.cycle-count-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.cycle-count-heading strong {
+    color: var(--tigre-navy);
+    font-size: 16px;
+}
+
+.cycle-count-status {
+    padding: 5px 10px;
+    background: var(--tigre-blue-soft);
+    color: var(--tigre-blue-dark);
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.cycle-count-secondary {
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--tigre-muted);
+}
+
+.cycle-count-link {
+    margin-top: 8px;
+    color: var(--tigre-blue);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.cycle-count-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 8px;
+    padding: 16px;
+    border: 1px solid var(--tigre-border);
+    border-radius: 8px;
+    background: var(--tigre-ice);
+}
+
+.cycle-count-detail h3,
+.cycle-count-detail h4,
+.cycle-count-detail p {
+    margin: 0;
+}
+
+.cycle-count-detail h3,
+.cycle-count-detail h4 {
+    color: var(--tigre-navy);
+}
+
+.cycle-count-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cycle-count-product {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px;
+    background: white;
+    border: 1px solid var(--tigre-border);
+    border-radius: 6px;
+}
+
+.cycle-count-product span {
+    font-size: 13px;
+    color: var(--tigre-muted);
+}
+
+.cycle-count-groups {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.cycle-count-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+    background: white;
+    border: 1px solid var(--tigre-border);
+    border-radius: 8px;
+}
+
+.cycle-count-group strong {
+    color: var(--tigre-navy);
+}
+
+.cycle-count-group span,
+.cycle-count-group small {
+    font-size: 12px;
+    color: var(--tigre-muted);
+}
+
+.cycle-count-group ul {
+    margin: 4px 0;
+    padding-left: 20px;
+}
+
+@media (max-width: 550px) {
+    .cycle-count-groups {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* =========================================
+   REVISIÓN DE INVENTARIOS CÍCLICOS
+   ========================================= */
+
+.cycle-review {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    min-width: 0;
+}
+
+/* Encabezado de resultados */
+
+.cycle-review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.cycle-review-header h4 {
+    margin: 0 0 5px;
+    color: var(--tigre-navy);
+    font-size: 18px;
+}
+
+.cycle-review-header p {
+    margin: 0;
+    color: var(--tigre-muted);
+    font-size: 13px;
+}
+
+.cycle-review-count {
+    flex-shrink: 0;
+    padding: 6px 10px;
+    border-radius: 20px;
+    background: var(--tigre-blue-soft);
+    color: var(--tigre-blue-dark);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Tarjeta de cada resultado */
+
+.cycle-review-card {
+    padding: 18px;
+    border: 1px solid var(--tigre-border);
+    border-radius: 10px;
+    background: var(--tigre-surface);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+}
+
+.cycle-review-product {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.cycle-review-code {
+    display: block;
+    color: var(--tigre-navy);
+    font-size: 16px;
+    overflow-wrap: anywhere;
+}
+
+.cycle-review-description {
+    margin: 5px 0 0;
+    color: var(--tigre-muted);
+    font-size: 13px;
+}
+
+.cycle-review-status {
+    flex-shrink: 0;
+    padding: 6px 9px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.cycle-review-status.difference {
+    background: #fff0ed;
+    color: var(--tigre-error);
+}
+
+.cycle-review-status.correct {
+    background: #e8f7ef;
+    color: var(--tigre-success);
+}
+
+/* Ubicación */
+
+.cycle-review-location {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--tigre-border);
+}
+
+.cycle-review-label {
+    font-size: 12px;
+    color: var(--tigre-muted);
+}
+
+.cycle-review-location strong {
+    font-size: 13px;
+    color: var(--tigre-text);
+}
+
+/* Tres columnas de cantidades */
+
+.cycle-review-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.cycle-review-metric {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 14px 8px;
+    border-radius: 8px;
+    background: var(--tigre-bg);
+    text-align: center;
+    min-width: 0;
+}
+
+.cycle-review-metric span {
+    font-size: 11px;
+    color: var(--tigre-muted);
+}
+
+.cycle-review-metric strong {
+    font-size: 23px;
+    color: var(--tigre-navy);
+}
+
+.cycle-review-metric.difference {
+    background: #fff0ed;
+}
+
+.cycle-review-metric.difference strong {
+    color: var(--tigre-error);
+}
+
+.cycle-review-metric.correct {
+    background: #e8f7ef;
+}
+
+.cycle-review-metric.correct strong {
+    color: var(--tigre-success);
+}
+
+/* Justificaciones */
+
+.cycle-review-justification {
+    padding-top: 14px;
+    border-top: 1px solid var(--tigre-border);
+}
+
+.cycle-review-justification .form-field {
+    gap: 10px;
+}
+
+.cycle-review-justification textarea {
+    width: 100%;
+    padding: 12px;
+    font: inherit;
+    font-size: 14px;
+    color: var(--tigre-text);
+    border: 1px solid var(--tigre-border);
+    border-radius: 6px;
+    resize: vertical;
+}
+
+.cycle-review-justification textarea:focus {
+    outline: none;
+    border-color: var(--tigre-blue);
+    box-shadow: 0 0 0 3px var(--tigre-focus);
+}
+
+.cycle-review-justification .form-secondary {
+    width: 100%;
+}
+
+.cycle-review-justified {
+    padding: 12px;
+    background: #e8f7ef;
+    border-radius: 8px;
+    color: var(--tigre-success);
+}
+
+.cycle-review-justified p {
+    margin: 6px 0 0;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+/* Cierre administrativo */
+
+.cycle-review-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 18px;
+    background: var(--tigre-surface);
+    border: 1px solid var(--tigre-border);
+    border-radius: 10px;
+}
+
+.cycle-review-pending {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.cycle-review-pending strong {
+    color: var(--tigre-navy);
+}
+
+.cycle-review-pending span {
+    color: var(--tigre-muted);
+    font-size: 13px;
+}
+
+.cycle-review-footer .form-submit {
+    width: 100%;
+}
+
+/* Adaptación a pantallas pequeñas */
+
+@media (max-width: 480px) {
+
+    .cycle-review-card {
+        padding: 12px;
+    }
+
+    .cycle-review-product {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .cycle-review-header {
+        flex-wrap: wrap;
+    }
+
+    .cycle-review-metrics {
+        gap: 5px;
+    }
+
+    .cycle-review-metric {
+        padding: 12px 4px;
+    }
+
+    .cycle-review-metric span {
+        font-size: 10px;
+    }
+
+    .cycle-review-metric strong {
+        font-size: 19px;
+    }
+}
+
+/* Observaciones de inventarios cíclicos */
+
+.cycle-observations {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+}

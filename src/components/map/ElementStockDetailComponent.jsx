@@ -51,7 +51,7 @@ const ElementStockDetailComponent = ({ warehouseId, element, onClose }) => {
     return (
       <>
         <PositionHeader rack={element} positionId={positionId} />
-        <LocationStockComponent key={positionId} items={stockAt(positionId)} />
+        <LocationStockComponent key={positionId} items={stockAt(positionId)}  elementId={element._id} positionId={positionId} onChanged={reload} />
       </>
     )
   }
